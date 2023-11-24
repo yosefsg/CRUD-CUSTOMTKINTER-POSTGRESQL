@@ -8,10 +8,25 @@ Created on Thu Nov 23 14:07:27 2023
 import customtkinter as ctk
 import colors
 from tkfontawesome import icon_to_image
+from stack import PageStack
 
 class SideBar(ctk.CTkFrame):
     def __init__(self, parent):
         super().__init__(parent)
+        
+        # Haciendolo atributo de instancia
+        self.parent = parent
+        
+        # Instanciando el stack de las screens
+        self.stack = PageStack(parent)    
+        
+        # Creando el sidebar
+        self.create_sidebar()
+        
+        # Mostrando la pantalla de Trabajos por defecto
+        self.stack.switch_page("Trabajos")
+        
+    def create_sidebar(self):
         # Iconos que se van a usar
         _userIcon = icon_to_image('user-circle', fill=colors.grey, scale_to_width=130)
         _toolsIcon = icon_to_image('tools', fill=colors.grey, scale_to_width=16)
@@ -28,7 +43,7 @@ class SideBar(ctk.CTkFrame):
         # Lo que va arriba con el icono de admin        
         ctk.CTkLabel(self, image=_userIcon, text='').pack(padx=40, pady=(30, 10))
         ctk.CTkLabel(self, text="Administrador", text_color=colors.grey, font=('Helvetica', 20)).pack(pady=(0, 50))
-        
+                
         # Menú de navegación
         trabajos = ctk.CTkButton(
             self,
@@ -41,7 +56,8 @@ class SideBar(ctk.CTkFrame):
             fg_color=colors.brown,
             hover_color=colors.darkbrown,
             height=57,
-            anchor='w'
+            anchor='w',
+            command=lambda: self.stack.switch_page('Trabajos')
         ).pack(fill='x')
         
         registrarCliente = ctk.CTkButton(
@@ -55,7 +71,8 @@ class SideBar(ctk.CTkFrame):
             fg_color=colors.brown,
             hover_color=colors.darkbrown,
             height=57,
-            anchor='w'
+            anchor='w',
+            command=lambda: self.stack.switch_page('RegistroCliente')
         ).pack(fill='x')
         
         historial = ctk.CTkButton(
@@ -69,7 +86,8 @@ class SideBar(ctk.CTkFrame):
             fg_color=colors.brown,
             hover_color=colors.darkbrown,
             height=57,
-            anchor='w'
+            anchor='w',
+            command=lambda: self.stack.switch_page('Historial')
         ).pack(fill='x')
         
         inventario = ctk.CTkButton(
@@ -83,7 +101,8 @@ class SideBar(ctk.CTkFrame):
             fg_color=colors.brown,
             hover_color=colors.darkbrown,
             height=57,
-            anchor='w'
+            anchor='w',
+            command=lambda: self.stack.switch_page('Inventario')
         ).pack(fill='x')
         
         creditos = ctk.CTkButton(
@@ -97,9 +116,10 @@ class SideBar(ctk.CTkFrame):
             fg_color=colors.brown,
             hover_color=colors.darkbrown,
             height=57,
-            anchor='w'
+            anchor='w',
+            command=lambda: self.stack.switch_page('Creditos')
         ).pack(fill='x', )
-        
-        
-        
+                
         self.pack(side='left', fill='y')
+        
+    

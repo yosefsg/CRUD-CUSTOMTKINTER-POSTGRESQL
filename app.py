@@ -14,8 +14,9 @@ class App(ctk.CTk):
         _yWin = (self.winfo_screenheight() // 2) - (h//2)
         self.geometry(f'{w}x{h}+{_xWin}+{_yWin}')
         self.config(bg=colors.white)
-        self.resizable(False, False)
-        # Mostrando el sidebar
+        self.title("Proyecto SBD")
+        
+        # Controlador de las pantallas
         SideBar(self)
         
         self.mainloop()
