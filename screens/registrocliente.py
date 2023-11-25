@@ -1,13 +1,10 @@
 import customtkinter as ctk
 import colors
+from components.header import Header
 
-class RegistroCliente(ctk.CTkFrame):
+class Contenido(ctk.CTkFrame):
     def __init__(self, parent):
         super().__init__(parent)
-        self.configure(corner_radius=0)
-        
-        ctk.CTkLabel(self, text="REGISTRO DE CLIENTES", font=("Arial", 18)).grid(row=0, column=0, columnspan=2)
-        
         # Crear dos columnas para los campos
         left_frame = ctk.CTkFrame(self)
         left_frame.grid(row=1, column=0, padx=10)
@@ -62,8 +59,8 @@ class RegistroCliente(ctk.CTkFrame):
         submit_button = ctk.CTkButton(self, text="Enviar", command=self.enviar_registro)
         submit_button.grid(row=4, column=0, columnspan=2)
         
-        self.pack(fill='both', expand=True)
-    
+        self.pack(expand=True, fill='both')
+        
     def enviar_registro(self):
         # Obtener los valores de todos los campos
         id_cliente = self.id_entry.get()
@@ -79,4 +76,21 @@ class RegistroCliente(ctk.CTkFrame):
         
         # Aquí podrías realizar las acciones para guardar estos datos en una base de datos u otro procesamiento necesario.
         print(f"Registrando cliente - ID: {id_cliente}, Nombre: {nombre}, Apellido Paterno: {apellido_paterno}, Apellido Materno: {apellido_materno}, Calle: {calle}, Colonia: {colonia}, CP: {cp}, Número Exterior: {num_ext}, Teléfono: {telefono}, Correo: {email}")
+        
+
+class RegistroCliente(ctk.CTkFrame):
+    def __init__(self, parent):
+        super().__init__(parent)
+        self.configure(corner_radius=0)
+        
+        # Cabecera con título
+        Header(self, "Registro de clientes") 
+          
+        # Contenido para el registro de clientes
+        Contenido(self)
+        
+        
+        self.pack(fill='both', expand=True)
+    
+    
 
