@@ -1,0 +1,63 @@
+CREATE TABLE INVENTARIO(
+	IdInventario SERIAL,
+	Descripcion VARCHAR(50),
+	Cantidad INT,
+	
+	CONSTRAINT INV_PK PRIMARY KEY(IdInventario)
+);
+
+CREATE TABLE TRABAJADOR(
+	IdTrabajador SERIAL,
+	Nombre VARCHAR(15),
+	ApellidoP VARCHAR(20),
+	ApellidoM VARCHAR(20),
+	Telefono VARCHAR(15),
+	IdInventario INT,
+	
+	CONSTRAINT TRAB_PK PRIMARY KEY(IdTrabajador),
+	CONSTRAINT TRAB_INV_FK FOREIGN KEY (IdInventario) REFERENCES INVENTARIO(IdInventario)
+);
+
+CREATE TABLE CLIENTE(
+	IdCliente SERIAL,
+	IdTrabajador INT,
+	Nombre VARCHAR(15),
+	ApellidoP VARCHAR(20),
+	ApellidoM VARCHAR(20),
+	Calle VARCHAR(20),
+	Colonia VARCHAR(20),
+	CodigoPostal VARCHAR(10),
+	NumExt VARCHAR(10),
+	NumInt VARCHAR(10),
+	Telefono VARCHAR(15),
+	Correo VARCHAR(45),
+	
+	CONSTRAINT CLIENT_PK PRIMARY KEY (IdCliente),
+	CONSTRAINT CLIENT_TRAB_FK FOREIGN KEY (IdTrabajador) REFERENCES Trabajador(IdTrabajador)
+);
+
+CREATE TABLE CITA(
+	IdCita SERIAL,
+	IdCliente INT,
+	Fecha VARCHAR(30),
+	Cotizacion DECIMAL(10,2),
+	Descripcion VARCHAR(140),
+	Lugar VARCHAR(140),
+	
+	CONSTRAINT CITA_PK PRIMARY KEY(IdCita),
+	CONSTRAINT CITA_CLIENT_FK FOREIGN KEY (IdCliente) REFERENCES CLIENTE(IdCliente)
+);
+
+CREATE TABLE EQUIPO(
+	IdEquipo SERIAL,
+	IdCliente INT,
+	HP_Compresor VARCHAR(40),
+	Voltaje VARCHAR(10),
+	Marca VARCHAR(15),
+	Capacidad VARCHAR(10),
+	Descripcion VARCHAR(140),
+	HP_Ventiladores INT,
+	
+	CONSTRAINT EQUIPO_PK PRIMARY KEY (IdEquipo),
+	CONSTRAINT EQUIPO_CLIENT_FK FOREIGN KEY (IdCliente) REFERENCES CLIENTE(IdCliente)
+);
