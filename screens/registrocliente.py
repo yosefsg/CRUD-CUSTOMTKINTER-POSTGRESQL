@@ -74,7 +74,7 @@ class Contenido(ctk.CTkFrame):
         telefono = self.telefono_entry.get()
         email = self.email_entry.get()
         
-        # Aquí podrías realizar las acciones para guardar estos datos en una base de datos u otro procesamiento necesario.
+        # Aquí se realizan las acciones para guardar estos datos en una base de datos u otro procesamiento necesario.
         print(f"Registrando cliente - ID: {id_cliente}, Nombre: {nombre}, Apellido Paterno: {apellido_paterno}, Apellido Materno: {apellido_materno}, Calle: {calle}, Colonia: {colonia}, CP: {cp}, Número Exterior: {num_ext}, Teléfono: {telefono}, Correo: {email}")
         
 
@@ -84,8 +84,9 @@ class RegistroCliente(ctk.CTkFrame):
         self.configure(corner_radius=0)
         
         # Cabecera con título
-        Header(self, "Registro de clientes") 
+        Header(self, "Registrar nuevo cliente") 
           
+        ctk.CTkLabel(self, text="Ingresa los datos del cliente", font=("Helvetica", 20)).pack(side='top', anchor='nw', pady=25, padx=25)
         # Contenido para el registro de clientes
         Contenido(self)
         
