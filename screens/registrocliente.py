@@ -80,9 +80,12 @@ class Contenido(ctk.CTkFrame):
         
 
 class RegistroCliente(ctk.CTkFrame):
-    def __init__(self, parent):
+    def __init__(self, parent, change_page):
         super().__init__(parent)
         self.configure(corner_radius=0, fg_color=colors.grey)
+        
+        # Para cambiar de pantalla
+        self.change_page = change_page
         
         # Cabecera con título
         Header(self, "Registrar nuevo cliente") 

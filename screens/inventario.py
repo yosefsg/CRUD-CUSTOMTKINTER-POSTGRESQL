@@ -6,11 +6,14 @@ from components.tabla_inventario import TablaInventario
 
 
 class Inventario(ctk.CTkFrame):
-    def __init__(self, parent):
+    def __init__(self, parent, change_page):
         super().__init__(parent)
         self.configure(corner_radius=0, fg_color=colors.grey)
         # Cabecera con título
         Header(self, "Inventario")
+        
+        # Para cambiar de pantalla
+        self.change_page = change_page
         
         # Para consumir las "apis" y armar la conexión
         self.conn = pg.Connection()

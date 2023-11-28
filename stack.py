@@ -3,6 +3,7 @@ from screens.registrocliente import RegistroCliente
 from screens.historial import Historial
 from screens.inventario import Inventario
 from screens.creditos import Creditos
+from screens.agendarcita import AgendarCita
 import customtkinter as ctk
 
 class PageStack(ctk.CTkFrame):
@@ -25,7 +26,8 @@ class PageStack(ctk.CTkFrame):
                 "RegistroCliente": RegistroCliente,
                 "Historial": Historial,
                 "Inventario": Inventario,
-                "Creditos": Creditos
+                "Creditos": Creditos,
+                "AgendarCita": AgendarCita
                 }
         
         
@@ -44,4 +46,4 @@ class PageStack(ctk.CTkFrame):
         # print(self.stack[screen])
         # Cambiando de pantalla
         Current_screen = self.stack[screen]
-        Current_screen(self)
+        Current_screen(self, self.switch_page)

@@ -1,6 +1,7 @@
 import customtkinter as ctk
 import colors
 from components.sidebar import SideBar
+from stack import PageStack
 
 class App(ctk.CTk):
     def __init__(self, w, h):
@@ -13,8 +14,11 @@ class App(ctk.CTk):
         self.config(bg=colors.white)
         self.title("Proyecto SBD")
         
+        # Instanciando el stack de las screens
+        _stack = PageStack(self)    
+        
         # Controlador de las pantallas
-        SideBar(self)
+        SideBar(self, _stack)
         
         self.mainloop()
 
