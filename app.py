@@ -20,11 +20,6 @@ class App(ctk.CTk):
 
 
 if __name__ == '__main__':
-<<<<<<< HEAD
     load_dotenv()
     App(1080, 580)
     
-=======
-    
-    App(1080, 580)
->>>>>>> 7c5c763e56429c06f43bfc2bc056e92be7e423a2
