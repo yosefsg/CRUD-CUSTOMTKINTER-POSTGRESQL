@@ -10,15 +10,15 @@ class LeftForm(ctk.CTkFrame):
         self.configure(fg_color=colors.white)
         
         ctk.CTkLabel(self, text="ID Cliente", font=("Helvetica", 32)).pack()
-        id_cliente = ctk.CTkEntry(self, fg_color=colors.grey, border_width=1, corner_radius=7, width=150)
+        id_cliente = ctk.CTkEntry(self, fg_color=colors.grey, border_width=1, corner_radius=7, width=200, height=40)
         id_cliente.pack(pady=15)
         
         ctk.CTkLabel(self, text="Fecha", font=("Helvetica", 32)).pack()
-        fecha = ctk.CTkEntry(self, fg_color=colors.grey, border_width=1, corner_radius=7, width=150)
+        fecha = ctk.CTkEntry(self, fg_color=colors.grey, border_width=1, corner_radius=7, width=200, height=40)
         fecha.pack(pady=15)
         
         ctk.CTkLabel(self, text="Cotizacion", font=("Helvetica", 32)).pack()
-        cotizacion = ctk.CTkEntry(self, fg_color=colors.grey, border_width=1, corner_radius=7, width=150)
+        cotizacion = ctk.CTkEntry(self, fg_color=colors.grey, border_width=1, corner_radius=7, width=200, height=40)
         cotizacion.pack(pady=15)
         
         self.pack(side='left', padx=20, pady=20, anchor='nw')
@@ -34,7 +34,7 @@ class RightForm(ctk.CTkFrame):
                                      border_width=1,
                                      corner_radius=7,
                                      width=350,
-                                     height=100
+                                     height=140
                                      )
         descripcion.pack(pady=15)
         
@@ -60,7 +60,6 @@ class AppointmentFrame(ctk.CTkFrame):
         
         # Frame para la parte de la derecha XD
         RightForm(self)
-
         
         self.pack(fill='both', expand=True, padx=20, pady=20)
 
@@ -78,15 +77,17 @@ class AgendarCita(ctk.CTkFrame):
         self.conn = pg.Connection()
         self.cursor = self.conn.cursor
         
-        # ctk.CTkButton(self,
-        #               width=140,
-        #               height=32,
-        #               text="Agregar Cita",
-        #               fg_color=colors.darkbrown,
-        #               hover_color=colors.brown,
-        #               font=("Helvetica", 15)
-        # ).pack(padx=20, pady=15, side="top", anchor='e')
-        
         AppointmentFrame(self)
+        
+        # Boton para registrar cita
+        ctk.CTkButton(self,
+                      width=250,
+                      height=45,
+                      text="Registrar",
+                      fg_color=colors.darkbrown,
+                      hover_color=colors.brown,
+                      text_color=colors.white,
+                      font=("Helvetica", 20, 'bold')
+        ).pack(pady=15, padx=20, side="bottom", anchor='center')
         
         self.pack(fill='both', expand=True)
