@@ -78,6 +78,17 @@ class Connection:
         rows = self.cursor.fetchall()
         
         return ([dict(row) for row in rows])
+    
+    def postAppointments(self, data):
+        sql = """
+        INSERT INTO CITA (idcliente, fecha, cotizacion, descripcion, lugar)
+        VALUES (%s, %s, %s, %s, %s);
+        """
+        
+        self.cursor.execute(sql, data)
+        self.conn.commit()
+                
+        self.close()
                
         # self.cursor.close()
         

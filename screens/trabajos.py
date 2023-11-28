@@ -18,6 +18,7 @@ class Trabajos(ctk.CTkFrame):
         # Para consumir las "apis" y armar la conexión
         self.conn = pg.Connection()
         self.cursor = self.conn.cursor
+        
         ctk.CTkButton(self,
                       width=140,
                       height=32,
