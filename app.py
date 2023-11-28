@@ -1,10 +1,7 @@
 import customtkinter as ctk
-from dotenv import load_dotenv
-import os
 import colors
 from components.sidebar import SideBar
 
-# print(os.getenv("DB_NAME"))
 class App(ctk.CTk):
     def __init__(self, w, h):
         super().__init__()
@@ -23,5 +20,5 @@ class App(ctk.CTk):
 
 
 if __name__ == '__main__':
-    load_dotenv()
+    
     App(1080, 580)
