@@ -11,14 +11,14 @@ from tkfontawesome import icon_to_image
 from stack import PageStack
 
 class SideBar(ctk.CTkFrame):
-    def __init__(self, parent):
+    def __init__(self, parent, stack):
         super().__init__(parent)
+        
+        # Recuperando el stack
+        self.stack = stack
         
         # Haciendolo atributo de instancia
         self.parent = parent
-        
-        # Instanciando el stack de las screens
-        self.stack = PageStack(parent)    
         
         # Creando el sidebar
         self.create_sidebar()
