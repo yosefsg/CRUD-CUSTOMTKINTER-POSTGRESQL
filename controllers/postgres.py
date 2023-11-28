@@ -27,7 +27,8 @@ class Connection:
     def close(self):
         self.conn.close()
     
-    def selectAllAppointments(self):
+    # Para las citas
+    def getAppointments(self):
         sql = """
         SELECT * FROM CITA;
         """
@@ -36,8 +37,7 @@ class Connection:
         
         return ([dict(row) for row in rows])
     
-    
-    def selectAllClients(self):
+    def getClients(self):
         sql = """
         SELECT * FROM CLIENTE;
         """
@@ -46,5 +46,39 @@ class Connection:
         rows = self.cursor.fetchall()
         
         return ([dict(row) for row in rows])
+    
+    # Para el historial
+    def getHistory(self):
+        sql = """
+        SELECT * FROM HISTORIAL;
+        """
+        
+        self.cursor.execute(sql)
+        rows = self.cursor.fetchall()
+        
+        return ([dict(row) for row in rows])
+    
+    def getInventory(self):
+        sql = """
+        SELECT * FROM INVENTARIO;
+        """
+        
+        self.cursor.execute(sql)
+        rows = self.cursor.fetchall()
+        
+        return ([dict(row) for row in rows])
+    
+    # Para la información que se mostrará en "Creditos"
+    def getCredit(self):
+        sql = """
+        SELECT * FROM CREDITO;
+        """
+        
+        self.cursor.execute(sql)
+        rows = self.cursor.fetchall()
+        
+        return ([dict(row) for row in rows])
                
         # self.cursor.close()
+        
+    # Si ven necesario agregar más controladores, adelante
