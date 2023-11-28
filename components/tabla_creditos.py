@@ -16,7 +16,7 @@ class TablaCreditos(ctk.CTkFrame):
         
         # Esto es importante, si van a hacer alguna tabla, usen el "get" correspondiente
         # En este caso, estoy trayendo todas las citas. Pueden ver cómo funciona en ./controllers/postgres.py
-        fetch_creditos = parent.conn.getHistory() # Esto lo van a cambiar por el que corresponde a la pantalla
+        fetch_creditos = parent.conn.getCredito() # Esto lo van a cambiar por el que corresponde a la pantalla
         
         # Este es el dataset que deberán organizar. Será usado para mostrarlo en la app
         # Con objetos de Etiqueta (ctk.CTkLabel)
@@ -26,7 +26,7 @@ class TablaCreditos(ctk.CTkFrame):
                 creditos['idcredito'],
                 creditos['idcliente'],
                 creditos['fecha'],
-                creditos['limitedepago'],
+                creditos['limitepago'],
                 )
                 for creditos in fetch_creditos]
         
@@ -44,9 +44,9 @@ class TablaCreditos(ctk.CTkFrame):
         # - el segundo parámetro (weight=1) indica el tamaño horizontal que le toca A ESA COLUMNA EN ESPECIFICO
         
         self.grid_columnconfigure(0, weight=1) # ID
-        self.grid_columnconfigure(1, weight=1) # Cliente
+        self.grid_columnconfigure(1, weight=1) # IDCliente
         self.grid_columnconfigure(2, weight=1) # Fecha
-        self.grid_columnconfigure(3, weight=1) # Cotizacion
-        self.grid_columnconfigure(5, weight=3) # Descripcion
+        self.grid_columnconfigure(3, weight=1) # LimitePago
+        
         
         self.pack(expand=True, fill='both')
