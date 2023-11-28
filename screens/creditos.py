@@ -1,6 +1,8 @@
 import customtkinter as ctk
 import colors
 from components.header import Header
+import controllers.postgres as pg
+from components.tabla_creditos import TablaCreditos, TablaCreditos
 
 
 class Creditos(ctk.CTkFrame):
@@ -15,5 +17,10 @@ class Creditos(ctk.CTkFrame):
         
         ctk.CTkLabel(self, text="CREDITOS").pack()
         
+        self.conn = pg.Connection()
+        self.cursor = self.conn.cursor
+        
+        TablaCreditos(self)
+    
         self.pack(fill='both', expand=True)
         
