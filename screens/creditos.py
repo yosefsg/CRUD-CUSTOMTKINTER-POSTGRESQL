@@ -16,3 +16,4 @@ class Creditos(ctk.CTkFrame):
         ctk.CTkLabel(self, text="CREDITOS").pack()
         
         self.pack(fill='both', expand=True)
+        
