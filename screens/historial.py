@@ -21,7 +21,6 @@ class Historial(ctk.CTkFrame):
         
         TablaHistorial(self)
         
-        
         # ctk.CTkLabel(self, text="HISTORIAL").pack()
         
         self.pack(fill='both', expand=True)
