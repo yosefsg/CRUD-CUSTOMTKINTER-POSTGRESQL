@@ -36,6 +36,7 @@ class Connection:
         
         return ([dict(row) for row in rows])
     
+    
     def selectAllClients(self):
         sql = """
         SELECT * FROM CLIENTE;

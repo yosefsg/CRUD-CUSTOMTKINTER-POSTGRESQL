@@ -1,43 +1,8 @@
 import customtkinter as ctk
-
 import colors
 from components.header import Header
-import postgres.postgres as pg
-
-class Tabla(ctk.CTkFrame):
-    def __init__(self, parent):
-        super().__init__(parent)
-        headers = ["ID", "Cliente", "Fecha", "Cotizacion", "Lugar", "Descripcion" ]
-        for col, header in enumerate(headers):
-            etiqueta = ctk.CTkLabel(self, text=header, width=30, text_color=colors.darkbrown, font=("Helvetica", 18, "bold"))
-            etiqueta.grid(row=0, column=col, sticky='wn')
-        
-        fetch_citas = parent.conn.selectAllAppointments()
-        
-        data = [(
-                cita['idcita'],
-                cita['idcliente'],
-                cita['fecha'],
-                cita['cotizacion'],
-                cita['lugar'],
-                cita['descripcion']
-                )
-                for cita in fetch_citas]
-        
-
-        for i, fila in enumerate(data, start=1):
-            for j, valor in enumerate(fila):
-                etiqueta = ctk.CTkLabel(self, text=valor, font=("Helvetica", 16))
-                etiqueta.grid(row=i, column=j, sticky='w')
-                
-        self.grid_columnconfigure(0, weight=1) # ID
-        self.grid_columnconfigure(1, weight=1) # Cliente
-        self.grid_columnconfigure(2, weight=1) # Fecha
-        self.grid_columnconfigure(3, weight=1) # Cotizacion
-        self.grid_columnconfigure(4, weight=2) # Lugar
-        self.grid_columnconfigure(5, weight=3) # Descripcion
-        
-        self.pack(expand=True, fill='both')
+import controllers.postgres as pg
+from components.tabla_trabajos import TablaTrabajos
 
 class Trabajos(ctk.CTkFrame):
     def __init__(self, parent):
@@ -49,6 +14,15 @@ class Trabajos(ctk.CTkFrame):
         self.conn = pg.Connection()
         self.cursor = self.conn.cursor
         
-        Tabla(self)
+        ctk.CTkButton(self,
+                      width=140,
+                      height=32,
+                      text="Agregar Cita",
+                      fg_color=colors.darkbrown,
+                      hover_color=colors.brown,
+                      font=("Helvetica", 15)
+        ).pack(padx=20, pady=15, side="top", anchor='e')
+        
+        TablaTrabajos(self)
         
         self.pack(fill='both', expand=True)
