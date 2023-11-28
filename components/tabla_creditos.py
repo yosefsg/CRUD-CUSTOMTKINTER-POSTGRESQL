@@ -1,52 +1,41 @@
 import customtkinter as ctk
 import colors
 
-class TablaCreditos(ctk.CTkFrame):
+class TablaCredito(ctk.CTkFrame):
     def __init__(self, parent):
         super().__init__(parent)
         self.configure(corner_radius=0, fg_color=colors.grey)
         
-        # Estas son las cabeceras que indican qué va en cada columna
-        headers = ["ID", "IDCliente", "Fecha", "Límite de pago" ]
+        # Encabezados de la tabla
+        headers = ["ID Crédito", "ID Cliente", "Fecha", "Límite de Pago"]
         
-        # Esta cosa hace que se muestren los headers en la app, creando objetos de Etiqueta por cada header 
+        # Crear etiquetas para los encabezados
         for col, header in enumerate(headers):
             etiqueta = ctk.CTkLabel(self, text=header, width=30, text_color=colors.darkbrown, font=("Helvetica", 18, "bold"))
             etiqueta.grid(row=0, column=col, sticky='wn')
         
-        # Esto es importante, si van a hacer alguna tabla, usen el "get" correspondiente
-        # En este caso, estoy trayendo todas las citas. Pueden ver cómo funciona en ./controllers/postgres.py
-        fetch_creditos = parent.conn.getCredito() # Esto lo van a cambiar por el que corresponde a la pantalla
+        # Obtener datos de la tabla
+        fetch_credito = parent.conn.getCreditos()  # Reemplaza con la función adecuada de postgres.py
         
-        # Este es el dataset que deberán organizar. Será usado para mostrarlo en la app
-        # Con objetos de Etiqueta (ctk.CTkLabel)
-        # Cambien la variable "cita" por cualquier otra cosa para que se entienda bien
-        # Lo que está entre comillas simples es EL NOMBRE DE LA COLUMNA QUE VIENE EN NUESTRA BASE DE DATOS
+        # Organizar los datos
         data = [(
-                creditos['idcredito'],
-                creditos['idcliente'],
-                creditos['fecha'],
-                creditos['limitepago'],
-                )
-                for creditos in fetch_creditos]
-        
+            credito['idcredito'],
+            credito['idcliente'],
+            credito['fecha'],
+            credito['limitepago']
+            )
+            for credito in fetch_credito]
 
-        # Esto muestra en la app cada registro del dataset que armaron anteriormente.
+        # Mostrar datos en la tabla
         for i, fila in enumerate(data, start=1):
             for j, valor in enumerate(fila):
-                etiqueta = ctk.CTkLabel(self, text=valor, font=("Helvetica", 16))
+                etiqueta = ctk.CTkLabel(self, text=str(valor), font=("Helvetica", 16))
                 etiqueta.grid(row=i, column=j, sticky='w')
-                
-        # Esto, también importante, es para modificar el tamaño horizontal de cada columna
-        # De la siguiente función:
-        #   self.grid_columnconfigure(0, weight=1)
-        # - el primer parámetro (0) es el índice de la columna
-        # - el segundo parámetro (weight=1) indica el tamaño horizontal que le toca A ESA COLUMNA EN ESPECIFICO
-        
-        self.grid_columnconfigure(0, weight=1) # ID
-        self.grid_columnconfigure(1, weight=1) # IDCliente
-        self.grid_columnconfigure(2, weight=1) # Fecha
-        self.grid_columnconfigure(3, weight=1) # LimitePago
-        
-        
+
+        # Ajustar el tamaño de las columnas
+        self.grid_columnconfigure(0, weight=1)  # ID Crédito
+        self.grid_columnconfigure(1, weight=1)  # ID Cliente
+        self.grid_columnconfigure(2, weight=1)  # Fecha
+        self.grid_columnconfigure(3, weight=1)  # Límite de Pago
+
         self.pack(expand=True, fill='both')
