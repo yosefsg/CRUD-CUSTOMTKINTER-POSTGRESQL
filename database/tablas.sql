@@ -1,3 +1,5 @@
+--CREATE DATABASE ProyectoSBD;
+
 CREATE TABLE INVENTARIO(
 	IdInventario SERIAL,
 	Descripcion VARCHAR(50),
