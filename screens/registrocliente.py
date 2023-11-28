@@ -5,6 +5,7 @@ from components.header import Header
 class Contenido(ctk.CTkFrame):
     def __init__(self, parent):
         super().__init__(parent)
+        
         # Crear dos columnas para los campos
         left_frame = ctk.CTkFrame(self)
         left_frame.grid(row=1, column=0, padx=10)
@@ -81,7 +82,7 @@ class Contenido(ctk.CTkFrame):
 class RegistroCliente(ctk.CTkFrame):
     def __init__(self, parent):
         super().__init__(parent)
-        self.configure(corner_radius=0)
+        self.configure(corner_radius=0, fg_color=colors.grey)
         
         # Cabecera con título
         Header(self, "Registrar nuevo cliente") 
