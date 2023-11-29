@@ -13,7 +13,7 @@ class Creditos(ctk.CTkFrame):
         self.change_page = change_page
         
         # Cabecera con título
-        Header(self, "Crédito")
+        Header(self, "Créditos")
         
         self.conn = pg.Connection()
         self.cursor = self.conn.cursor
