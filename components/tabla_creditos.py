@@ -13,10 +13,14 @@ class TablaCredito(ctk.CTkFrame):
         for col, header in enumerate(headers):
             etiqueta = ctk.CTkLabel(self, text=header, width=30, text_color=colors.darkbrown, font=("Helvetica", 18, "bold"))
             etiqueta.grid(row=0, column=col, sticky='wn')
-        
-        # Obtener datos de la tabla
-        fetch_credito = parent.conn.getCreditos()  # Reemplaza con la función adecuada de postgres.py
-        
+
+        try:
+            # Obtener datos de la tabla
+            fetch_credito = parent.conn.getcreditos()  # Reemplaza con la función adecuada de postgres.py
+        except Exception as e:
+            print("Error fetching creditos:", e)
+            fetch_credito = []  # Puedes asignar una lista vacía en caso de error
+
         # Organizar los datos
         data = [(
             credito['idcredito'],
