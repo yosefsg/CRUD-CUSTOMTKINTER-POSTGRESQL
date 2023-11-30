@@ -1,10 +1,18 @@
 import customtkinter as ctk
 import colors
+from tkfontawesome import icon_to_image
+import functools
 
 class TablaTrabajos(ctk.CTkFrame):
-    def __init__(self, parent):
+    def __init__(self, parent, refresh_page):
         super().__init__(parent)
+        self.parent = parent
+        self.refresh_page = refresh_page
         self.configure(corner_radius=0, fg_color=colors.grey)
+        
+         # Iconos que se van a usar
+        _edit_icon = icon_to_image('edit', fill=colors.grey, scale_to_width=16)
+        _trash_icon = icon_to_image('trash-alt', fill=colors.grey, scale_to_width=16)
         
         # Estas son las cabeceras que indican qué va en cada columna
         headers = ["ID", "Cliente", "Fecha", "Cotizacion", "Lugar", "Descripcion" ]
@@ -39,6 +47,24 @@ class TablaTrabajos(ctk.CTkFrame):
                 etiqueta = ctk.CTkLabel(self, text=valor, font=("Helvetica", 16))
                 etiqueta.grid(row=i, column=j, sticky='w')
                 
+            # Botón de editar
+            ctk.CTkButton(self,
+                        image=_edit_icon,
+                        text="",
+                        fg_color=colors.darkbrown,
+                        width=10,
+                        height=10,
+                        command=functools.partial(self.editAppointment, data[i-1][0])).grid(row=i, column=j, sticky='e')
+            
+            # Botón de eliminar
+            ctk.CTkButton(self,
+                        image=_trash_icon,
+                        text="",
+                        fg_color=colors.darkbrown,
+                        width=10,
+                        height=10,
+                        command=functools.partial(self.deleteAppointment, data[i-1][0])).grid(row=i, column=j+1, sticky='e')
+                
         # Esto, también importante, es para modificar el tamaño horizontal de cada columna
         # De la siguiente función:
         #   self.grid_columnconfigure(0, weight=1)
@@ -51,5 +77,16 @@ class TablaTrabajos(ctk.CTkFrame):
         self.grid_columnconfigure(3, weight=1) # Cotizacion
         self.grid_columnconfigure(4, weight=2) # Lugar
         self.grid_columnconfigure(5, weight=3) # Descripcion
+        self.grid_columnconfigure(6, weight=1) # Boton edit
+        self.grid_columnconfigure(7, weight=1) # Boton edit
         
         self.pack(expand=True, fill='both')
+        
+    def deleteAppointment(self, idcita):
+        self.parent.conn.deleteAppointment(tuple(str(idcita)))
+        
+        # Recarga la pantalla
+        self.refresh_page("Trabajos")
+        
+    def editAppointment(self, idcita):
+        pass

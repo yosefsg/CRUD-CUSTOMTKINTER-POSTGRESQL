@@ -92,4 +92,15 @@ class Connection:
                
         # self.cursor.close()
         
+        
+    def deleteAppointment(self, data):
+        sql = """
+        DELETE FROM CITA WHERE idcita = %s;
+        """
+        
+        self.cursor.execute(sql, data)
+        self.conn.commit()
+                
+        self.close()
+        
     # Si ven necesario agregar más controladores, adelante

@@ -29,6 +29,6 @@ class Trabajos(ctk.CTkFrame):
                       command=lambda: self.change_page("AgendarCita")
         ).pack(padx=20, pady=15, side="top", anchor='e')
         
-        TablaTrabajos(self)
+        TablaTrabajos(self, self.change_page)
         
         self.pack(fill='both', expand=True)
