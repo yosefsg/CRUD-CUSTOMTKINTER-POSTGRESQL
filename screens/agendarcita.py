@@ -96,6 +96,7 @@ class RightForm(ctk.CTkFrame):
             "lugar": self.lugar
         }
 
+
 class AppointmentFrame(ctk.CTkFrame):
     def __init__(self, parent, args):
         super().__init__(parent)
@@ -117,7 +118,7 @@ class AppointmentFrame(ctk.CTkFrame):
         return {**self.left, **self.right}
 
 class AgendarCita(ctk.CTkFrame):
-    def __init__(self, parent, change_page, *args): # , idcita="", idcliente="", fecha="", cotizacion="", descripcion="", lugar=""
+    def __init__(self, parent, change_page, *args): 
         super().__init__(parent)
         
         # Recuperando el ID de la cita si es que se desea editar un registro

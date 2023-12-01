@@ -76,7 +76,7 @@ class TablaClientes(ctk.CTkFrame):
         self.grid_columnconfigure(0, weight=1) # ID
         self.grid_columnconfigure(1, weight=2) # Nombre
         self.grid_columnconfigure(2, weight=1) # Telefono
-        self.grid_columnconfigure(3, weight=3) # Dirección
+        self.grid_columnconfigure(3, weight=2) # Dirección
         self.grid_columnconfigure(4, weight=2) # Correo
         self.grid_columnconfigure(5, weight=1) # Boton edit
         self.grid_columnconfigure(6, weight=1) # Boton edit

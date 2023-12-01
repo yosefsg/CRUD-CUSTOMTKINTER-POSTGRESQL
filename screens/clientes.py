@@ -25,7 +25,7 @@ class Clientes(ctk.CTkFrame):
                       fg_color=colors.darkbrown,
                       hover_color=colors.brown,
                       font=("Helvetica", 15),
-                      command=lambda: self.change_page("RegistrarCliente")
+                      command=lambda: self.change_page("RegistroCliente")
         ).pack(padx=20, pady=15, side="top", anchor='e')
         
         TablaClientes(self, self.change_page)
