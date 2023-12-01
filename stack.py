@@ -1,4 +1,5 @@
 from screens.trabajos import Trabajos
+from screens.clientes import Clientes
 from screens.registrocliente import RegistroCliente
 from screens.historial import Historial
 from screens.inventario import Inventario
@@ -23,11 +24,12 @@ class PageStack(ctk.CTkFrame):
                 
         return {
                 "Trabajos": Trabajos,
-                "RegistroCliente": RegistroCliente,
+                "Clientes": Clientes,
                 "Historial": Historial,
                 "Inventario": Inventario,
                 "Creditos": Creditos,
-                "AgendarCita": AgendarCita
+                "AgendarCita": AgendarCita,
+                "RegistroCliente": RegistroCliente
                 }
         
         
