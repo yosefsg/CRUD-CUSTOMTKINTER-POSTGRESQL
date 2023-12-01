@@ -12,7 +12,7 @@ class TablaTrabajos(ctk.CTkFrame):
         
          # Iconos que se van a usar
         _edit_icon = icon_to_image('edit', fill=colors.grey, scale_to_width=16)
-        _trash_icon = icon_to_image('trash-alt', fill=colors.grey, scale_to_width=16)
+        _check_icon = icon_to_image('check-circle', fill=colors.grey, scale_to_width=16)
         
         # Estas son las cabeceras que indican qué va en cada columna
         headers = ["ID", "Cliente", "Fecha", "Cotizacion", "Lugar", "Descripcion" ]
@@ -52,6 +52,7 @@ class TablaTrabajos(ctk.CTkFrame):
                         image=_edit_icon,
                         text="",
                         fg_color=colors.darkbrown,
+                        hover_color=colors.brown,
                         width=10,
                         height=10,
                         corner_radius=20,
@@ -59,9 +60,10 @@ class TablaTrabajos(ctk.CTkFrame):
             
             # Botón de eliminar
             ctk.CTkButton(self,
-                        image=_trash_icon,
+                        image=_check_icon,
                         text="",
                         fg_color=colors.darkbrown,
+                        hover_color=colors.brown,
                         width=10,
                         height=10,
                         corner_radius=20,

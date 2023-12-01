@@ -3,6 +3,8 @@ import colors
 from components.header import Header
 import controllers.postgres as pg
 from components.tabla_trabajos import TablaTrabajos
+from tkcalendar import DateEntry
+from tkcalendar import Calendar
 
 class LeftForm(ctk.CTkFrame):
     def __init__(self, parent, args):
@@ -18,16 +20,16 @@ class LeftForm(ctk.CTkFrame):
         try:
             self.id_cliente.insert(0, info['idcliente'])
         except Exception as e:
-            print("No args: ", e)
-            
+            print("No idcliente: ", e)
+        
         ctk.CTkLabel(self, text="Fecha", font=("Helvetica", 32)).pack()
-        self.fecha = ctk.CTkEntry(self, fg_color=colors.grey, border_width=1, corner_radius=7, width=200, height=40)
-        self.fecha.pack(pady=15)
+        self.fecha = DateEntry(self, width=16, background=colors.darkbrown, date_pattern='yyyy/mm/dd', font=("Helvetica", 14))
+        self.fecha.pack(padx=10, pady=10)
         
         try:
-            self.fecha.insert(0, info['fecha'])
+            self.fecha.set_date(info['fecha'])
         except:
-            print("No args")
+            print("No fecha")
         
         ctk.CTkLabel(self, text="Cotizacion", font=("Helvetica", 32)).pack()
         self.cotizacion = ctk.CTkEntry(self, fg_color=colors.grey, border_width=1, corner_radius=7, width=200, height=40)
@@ -36,7 +38,7 @@ class LeftForm(ctk.CTkFrame):
         try:
             self.cotizacion.insert(0, info['cotizacion'])
         except:
-            print("No args")
+            print("No cotizacion")
         
         self.pack(side='left', padx=20, pady=20, anchor='nw')
         
@@ -68,7 +70,7 @@ class RightForm(ctk.CTkFrame):
         try:
             self.descripcion.insert(1.0, info['descripcion'])
         except:
-            print("No args")
+            print("No descripcion")
         
         
         ctk.CTkLabel(self, text="Lugar", font=("Helvetica", 32)).pack()
@@ -84,7 +86,7 @@ class RightForm(ctk.CTkFrame):
         try:
             self.lugar.insert(1.0, info['lugar'])
         except Exception as e:
-            print("No args: ", e)
+            print("No lugar: ", e)
         
         self.pack(side='right', padx=20, pady=20, anchor='nw')
         
@@ -161,7 +163,7 @@ class AgendarCita(ctk.CTkFrame):
         
         self.conn.postAppointments((
             fields['idcliente'].get(),
-            fields['fecha'].get(),
+            fields['fecha'].get_date(),
             fields['cotizacion'].get(),
             fields['descripcion'].get("1.0", "end-1c"),
             fields['lugar'].get("1.0", "end-1c")            

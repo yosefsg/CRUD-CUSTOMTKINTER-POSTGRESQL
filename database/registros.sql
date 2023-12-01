@@ -48,7 +48,7 @@ VALUES
     (4, 2.0, '220V', 'Whirlpool', '8000 BTU', 'Aire portátil', 0.6),
     (5, 5.0, '110V', 'Haier', '24000 BTU', 'Split de techo', 1.5);
 	
-INSERT INTO HISTORIAL (idcliente, fecha, costo, descripción)
+INSERT INTO HISTORIAL (idcliente, fecha, costo, descripcion)
 VALUES
     (1, '2023-10-15', 200, 'Reparación de compresor y limpieza general'),
     (2, '2023-09-28', 150, 'Mantenimiento preventivo del sistema de enfriamiento'),

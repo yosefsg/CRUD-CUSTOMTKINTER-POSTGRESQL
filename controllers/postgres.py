@@ -54,8 +54,12 @@ class Connection:
         DELETE FROM CLIENTE WHERE idcliente = {};
         """.format(data)
         
-        self.cursor.execute(sql)
-        self.conn.commit()
+        try:
+            self.cursor.execute(sql)
+            self.conn.commit()
+        except Exception as e:
+            print("SQL ERROR: ", e)
+            self.conn.rollback()
                 
         self.close()
         
@@ -81,10 +85,12 @@ class Connection:
         WHERE idcliente = {}
         """.format(idcliente)
         
-        self.cursor.execute(sql, data)
-        self.conn.commit()
-                
-        self.close()
+        try:
+            self.cursor.execute(sql, data)
+            self.conn.commit()
+        except Exception as e:
+            print("SQL ERROR: ", e)
+            self.conn.rollback()
         
     
     # Para el historial
@@ -148,10 +154,12 @@ class Connection:
         VALUES (%s, %s, %s, %s, %s);
         """
         
-        self.cursor.execute(sql, data)
-        self.conn.commit()
-                
-        self.close()
+        try:
+            self.cursor.execute(sql, data)
+            self.conn.commit()
+        except Exception as e:
+            print("SQL ERROR: ", e)
+            self.conn.rollback()
                
         # self.cursor.close()
         
@@ -163,19 +171,23 @@ class Connection:
         WHERE idcita = {};
         """.format(idcita)
         
-        self.cursor.execute(sql, data)
-        self.conn.commit()
-                
-        self.close()
+        try:
+            self.cursor.execute(sql, data)
+            self.conn.commit()
+        except Exception as e:
+            print("SQL ERROR: ", e)
+            self.conn.rollback()
         
     def deleteAppointment(self, data):
         sql = """
         DELETE FROM CITA WHERE idcita = {};
         """.format(data)
         
-        self.cursor.execute(sql)
-        self.conn.commit()
-                
-        self.close()
+        try:
+            self.cursor.execute(sql)
+            self.conn.commit()
+        except Exception as e:
+            print("SQL ERROR: ", e)
+            self.conn.rollback()
         
     # Si ven necesario agregar más controladores, adelante
