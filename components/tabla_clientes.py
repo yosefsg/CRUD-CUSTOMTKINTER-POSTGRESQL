@@ -90,6 +90,6 @@ class TablaClientes(ctk.CTkFrame):
         self.change_page("Clientes")
         
     def editClient(self, idcliente):
-        cita = self.parent.conn.getAppointment(tuple(str(idcliente)))
+        client = self.parent.conn.getClient(idcliente)
         
-        self.change_page("RegistarCliente", cita)
+        self.change_page("RegistroCliente", client)

@@ -91,6 +91,6 @@ class TablaTrabajos(ctk.CTkFrame):
         self.change_page("Trabajos")
         
     def editAppointment(self, idcita):
-        cita = self.parent.conn.getAppointment(tuple(str(idcita)))
+        cita = self.parent.conn.getAppointment(idcita)
         
         self.change_page("AgendarCita", cita)

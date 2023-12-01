@@ -15,7 +15,7 @@ class LeftForm(ctk.CTkFrame):
         self.nombre.pack(pady=15, anchor='w')
         
         try:
-            self.nombre.insert(0, info['idcliente'])
+            self.nombre.insert(0, info['nombre'])
         except Exception as e:
             print("No args: ", e)
             
@@ -55,7 +55,7 @@ class LeftForm(ctk.CTkFrame):
         self.correo.pack(pady=15, anchor='w')
         
         try:
-            self.correo.insert(1.0, info['correo'])
+            self.correo.insert(0, info['correo'])
         except Exception as e:
             print("No args: ", e)
         
@@ -121,7 +121,7 @@ class RightForm(ctk.CTkFrame):
         self.codigopostal.pack(pady=15, anchor='w')
         
         try:
-            self.codigopostal.insert(1.0, info['codigopostal'])
+            self.codigopostal.insert(0, info['codigopostal'])
         except:
             print("No args")
         
@@ -134,7 +134,7 @@ class RightForm(ctk.CTkFrame):
             "numext": self.numext,
             "numint": self.numint,
             "colonia": self.colonia,
-            "codigpostal": self.codigopostal,
+            "codigopostal": self.codigopostal,
         }
 
 class NewClientFrame(ctk.CTkScrollableFrame):
@@ -199,29 +199,39 @@ class RegistroCliente(ctk.CTkFrame):
         if self.idcliente != None:
             return self.editInfo(fields)
         
-        self.conn.postAppointments((
-            fields['idcliente'].get(),
-            fields['fecha'].get(),
-            fields['cotizacion'].get(),
-            fields['descripcion'].get("1.0", "end-1c"),
-            fields['lugar'].get("1.0", "end-1c")            
+        self.conn.postClient((
+            fields['nombre'].get(),
+            fields['apellidop'].get(),
+            fields['apellidom'].get(),
+            fields['calle'].get(),
+            fields['colonia'].get(),
+            fields['codigopostal'].get(),
+            fields['numext'].get(),
+            fields['numint'].get(),
+            fields['telefono'].get(),
+            fields['correo'].get(),
         ))
         
         # Cambia a la screen de trabajos
         
-        self.change_page("Trabajos")
+        self.change_page("Clientes")
         
     def editInfo(self, fields):
-        self.conn.putAppointment(
+        self.conn.putClient(
             self.idcliente,
             (
-            fields['idcliente'].get(),
-            fields['fecha'].get(),
-            fields['cotizacion'].get(),
-            fields['descripcion'].get("1.0", "end-1c"),
-            fields['lugar'].get("1.0", "end-1c")            
+            fields['nombre'].get(),
+            fields['apellidop'].get(),
+            fields['apellidom'].get(),
+            fields['calle'].get(),
+            fields['colonia'].get(),
+            fields['codigopostal'].get(),
+            fields['numext'].get(),
+            fields['numint'].get(),
+            fields['telefono'].get(),
+            fields['correo'].get(),
         ))
         
         # Cambia a la screen de trabajos
         
-        self.change_page("Trabajos")
+        self.change_page("Clientes")

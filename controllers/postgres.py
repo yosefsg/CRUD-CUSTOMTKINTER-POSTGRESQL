@@ -37,6 +37,18 @@ class Connection:
         
         return ([dict(row) for row in rows])
     
+    def getClient(self, data):
+        sql = """
+        SELECT * FROM CLIENTE WHERE idcliente = {};
+        """.format(data)
+        self.cursor.execute(sql)
+        row = self.cursor.fetchone()
+        
+        if row:
+            return dict(row)
+        else:
+            return None
+    
     def deleteClient(self, data):
         sql = """
         DELETE FROM CLIENTE WHERE idcliente = {};
@@ -47,19 +59,32 @@ class Connection:
                 
         self.close()
         
-    def putClient(self, idcliente, data):
-        pass
-        # sql = """
-        # UPDATE CLIENTE
-        # SET
-        #     idcliente = %s, fecha = %s, cotizacion = %s, descripcion = %s, lugar = %s
-        # WHERE idcliente = {};
-        # """.format(idcliente)
-        
-        # self.cursor.execute(sql, data)
-        # self.conn.commit()
+    def postClient(self, data):
+        sql = """
+        INSERT INTO CLIENTE (nombre, apellidop, apellidom, calle, colonia, codigopostal, numext, numint, telefono, correo)
+        VALUES
+            (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s);
+        """
+        try:
+            self.cursor.execute(sql, data)
+            self.conn.commit()
+        except Exception as e:
+            print("SQL ERROR: ", e)
+            self.conn.rollback()
                 
-        # self.close()
+        self.close()
+        
+    def putClient(self, idcliente, data):
+        sql = """
+        UPDATE CLIENTE
+        SET nombre = %s, apellidop = %s, apellidom = %s, calle  = %s, colonia  = %s, codigopostal  = %s, numext  = %s, numint  = %s, telefono  = %s, correo = %s
+        WHERE idcliente = {}
+        """.format(idcliente)
+        
+        self.cursor.execute(sql, data)
+        self.conn.commit()
+                
+        self.close()
         
     
     # Para el historial
@@ -107,9 +132,9 @@ class Connection:
         # Para una cita
     def getAppointment(self, data):
         sql = """
-        SELECT * FROM CITA WHERE idcita = %s;
-        """
-        self.cursor.execute(sql, data)
+        SELECT * FROM CITA WHERE idcita = {};
+        """.format(data)
+        self.cursor.execute(sql)
         row = self.cursor.fetchone()
         
         if row:
