@@ -108,3 +108,17 @@ CREATE TABLE ABONOS(
 	CONSTRAINT ABONOS_PK PRIMARY KEY (IdCredito),
 	CONSTRAINT ABONO_CREDITO_FK FOREIGN KEY (IdCredito) REFERENCES CREDITO(IdCredito) ON DELETE CASCADE
 );
+
+-- Función para el trigger que inserta cosas a HISTORIAL
+CREATE OR REPLACE FUNCTION insertar_a_historial() RETURNS TRIGGER AS $$
+DECLARE BEGIN
+	INSERT INTO HISTORIAL (idcliente, fecha, costo, descripcion)
+	VALUES
+		(OLD.idcliente, OLD.fecha, OLD.cotizacion, OLD.descripcion);
+		RETURN NULL;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Creando el trigger
+CREATE TRIGGER actualizar_historial AFTER DELETE ON CITA
+FOR EACH ROW EXECUTE PROCEDURE insertar_a_historial();

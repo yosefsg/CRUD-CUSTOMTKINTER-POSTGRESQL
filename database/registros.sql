@@ -47,7 +47,8 @@ VALUES
     (3, 4.0, '220V', 'Carrier', '18000 BTU', 'Unidad central', 1.2),
     (4, 2.0, '220V', 'Whirlpool', '8000 BTU', 'Aire portátil', 0.6),
     (5, 5.0, '110V', 'Haier', '24000 BTU', 'Split de techo', 1.5);
-	
+
+/*
 INSERT INTO HISTORIAL (idcliente, fecha, costo, descripcion)
 VALUES
     (1, '2023-10-15', 200, 'Reparación de compresor y limpieza general'),
@@ -55,7 +56,9 @@ VALUES
     (3, '2023-11-05', 300, 'Reemplazo de válvula de expansión y carga de refrigerante'),
     (4, '2023-10-20', 180, 'Instalación de nuevo condensador y ajustes de temperatura'),
     (5, '2023-11-10', 250, 'Reparación de motor de ventilador y revisión completa del equipo');
+*/
 
+/*
 INSERT INTO FACTURA (idfactura, idhistorial, idcliente, fecha, costo, rfc, descripcion, metodo_pago)
 VALUES
     (1, 1, 1, '2023-10-20', 220, 'ABC123456XYZ', 'Servicio de reparación y mantenimiento', 'Tarjeta de crédito'),
@@ -63,7 +66,7 @@ VALUES
     (3, 3, 3, '2023-11-10', 320, 'GHI345678BCD', 'Reemplazo de componentes y servicio de carga', 'Efectivo'),
     (4, 4, 4, '2023-10-25', 200, 'JKL901234CDE', 'Instalación de nuevo condensador', 'Cheque'),
     (5, 5, 5, '2023-11-15', 270, 'MNO567890DEF', 'Reparación de motor y mantenimiento general', 'Transferencia bancaria');
-
+*/
 INSERT INTO CREDITO (idcredito, idcliente, fecha, limitepago)
 VALUES
     (1, 1, '2023-12-01', '2024-01-01'),
