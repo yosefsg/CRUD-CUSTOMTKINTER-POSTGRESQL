@@ -2,8 +2,7 @@ import customtkinter as ctk
 import colors
 from components.header import Header
 import controllers.postgres as pg
-# from components.tabla_trabajos import TablaTrabajos
-
+from components.tabla_clientes import TablaClientes
 
 class Clientes(ctk.CTkFrame):
     def __init__(self, parent, change_page):
@@ -26,9 +25,9 @@ class Clientes(ctk.CTkFrame):
                       fg_color=colors.darkbrown,
                       hover_color=colors.brown,
                       font=("Helvetica", 15),
-                      command=lambda: self.change_page("AgendarCita")
+                      command=lambda: self.change_page("RegistrarCliente")
         ).pack(padx=20, pady=15, side="top", anchor='e')
         
-        # TablaTrabajos(self, self.change_page)
+        TablaClientes(self, self.change_page)
         
         self.pack(fill='both', expand=True)

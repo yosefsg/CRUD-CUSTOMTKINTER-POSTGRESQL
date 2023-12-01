@@ -37,6 +37,31 @@ class Connection:
         
         return ([dict(row) for row in rows])
     
+    def deleteClient(self, data):
+        sql = """
+        DELETE FROM CLIENTE WHERE idcliente = {};
+        """.format(data)
+        
+        self.cursor.execute(sql)
+        self.conn.commit()
+                
+        self.close()
+        
+    def putClient(self, idcliente, data):
+        pass
+        # sql = """
+        # UPDATE CLIENTE
+        # SET
+        #     idcliente = %s, fecha = %s, cotizacion = %s, descripcion = %s, lugar = %s
+        # WHERE idcliente = {};
+        # """.format(idcliente)
+        
+        # self.cursor.execute(sql, data)
+        # self.conn.commit()
+                
+        # self.close()
+        
+    
     # Para el historial
     def getHistory(self):
         sql = """
