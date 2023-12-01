@@ -27,16 +27,6 @@ class Connection:
     def close(self):
         self.conn.close()
     
-    # Para las citas
-    def getAppointments(self):
-        sql = """
-        SELECT * FROM CITA;
-        """
-        self.cursor.execute(sql)
-        rows = self.cursor.fetchall()
-        
-        return ([dict(row) for row in rows])
-    
     def getClients(self):
         sql = """
         SELECT * FROM CLIENTE;
@@ -79,7 +69,30 @@ class Connection:
         
         return ([dict(row) for row in rows])
     
-    def postAppointments(self, data):
+        # Para las citas
+    def getAppointments(self):
+        sql = """
+        SELECT * FROM CITA;
+        """
+        self.cursor.execute(sql)
+        rows = self.cursor.fetchall()
+        
+        return ([dict(row) for row in rows])
+    
+        # Para una cita
+    def getAppointment(self, data):
+        sql = """
+        SELECT * FROM CITA WHERE idcita = %s;
+        """
+        self.cursor.execute(sql, data)
+        row = self.cursor.fetchone()
+        
+        if row:
+            return dict(row)
+        else:
+            return None
+    
+    def postAppointments(self, idcita, data):       
         sql = """
         INSERT INTO CITA (idcliente, fecha, cotizacion, descripcion, lugar)
         VALUES (%s, %s, %s, %s, %s);
@@ -92,6 +105,18 @@ class Connection:
                
         # self.cursor.close()
         
+    def putAppointment(self, idcita, data):
+        sql = """
+        UPDATE CITA
+        SET
+            idcliente = %s, fecha = %s, cotizacion = %s, descripcion = %s, lugar = %s
+        WHERE idcita = {};
+        """.format(idcita)
+        
+        self.cursor.execute(sql, data)
+        self.conn.commit()
+                
+        self.close()
         
     def deleteAppointment(self, data):
         sql = """

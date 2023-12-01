@@ -39,11 +39,11 @@ class PageStack(ctk.CTkFrame):
         except Exception as e:
             print("Error destroying screen from stack: ", e)
             
-    def switch_page(self, screen):
+    def switch_page(self, screen, *args):
         # Limpiando la pantalla para hacer el cambio
         self.hide_pages()
         
         # print(self.stack[screen])
         # Cambiando de pantalla
         Current_screen = self.stack[screen]
-        Current_screen(self, self.switch_page)
+        Current_screen(self, self.switch_page, *args)

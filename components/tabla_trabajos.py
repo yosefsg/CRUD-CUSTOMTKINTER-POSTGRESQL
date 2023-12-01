@@ -4,10 +4,10 @@ from tkfontawesome import icon_to_image
 import functools
 
 class TablaTrabajos(ctk.CTkFrame):
-    def __init__(self, parent, refresh_page):
+    def __init__(self, parent, change_page):
         super().__init__(parent)
         self.parent = parent
-        self.refresh_page = refresh_page
+        self.change_page = change_page
         self.configure(corner_radius=0, fg_color=colors.grey)
         
          # Iconos que se van a usar
@@ -54,6 +54,7 @@ class TablaTrabajos(ctk.CTkFrame):
                         fg_color=colors.darkbrown,
                         width=10,
                         height=10,
+                        corner_radius=20,
                         command=functools.partial(self.editAppointment, data[i-1][0])).grid(row=i, column=j, sticky='e')
             
             # Botón de eliminar
@@ -63,6 +64,7 @@ class TablaTrabajos(ctk.CTkFrame):
                         fg_color=colors.darkbrown,
                         width=10,
                         height=10,
+                        corner_radius=20,
                         command=functools.partial(self.deleteAppointment, data[i-1][0])).grid(row=i, column=j+1, sticky='e')
                 
         # Esto, también importante, es para modificar el tamaño horizontal de cada columna
@@ -86,7 +88,9 @@ class TablaTrabajos(ctk.CTkFrame):
         self.parent.conn.deleteAppointment(tuple(str(idcita)))
         
         # Recarga la pantalla
-        self.refresh_page("Trabajos")
+        self.change_page("Trabajos")
         
     def editAppointment(self, idcita):
-        pass
+        cita = self.parent.conn.getAppointment(tuple(str(idcita)))
+        
+        self.change_page("AgendarCita", cita)
