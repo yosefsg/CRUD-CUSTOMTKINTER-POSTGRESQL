@@ -121,7 +121,10 @@ class AgendarCita(ctk.CTkFrame):
         super().__init__(parent)
         
         # Recuperando el ID de la cita si es que se desea editar un registro
-        self.idcita = dict(*args)['idcita']
+        try:
+            self.idcita = dict(*args)['idcita']
+        except:
+            self.idcita = None
         
         # Para cambiar de pantalla
         self.change_page = change_page
@@ -152,7 +155,8 @@ class AgendarCita(ctk.CTkFrame):
     def sendInfo(self, fields):
         
         # Si es el caso de editar una cita
-        return self.editInfo(fields)
+        if self.idcita != None:
+            return self.editInfo(fields)
         
         self.conn.postAppointments((
             fields['idcliente'].get(),

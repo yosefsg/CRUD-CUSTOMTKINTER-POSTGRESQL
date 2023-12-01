@@ -85,7 +85,7 @@ class TablaTrabajos(ctk.CTkFrame):
         self.pack(expand=True, fill='both')
         
     def deleteAppointment(self, idcita):
-        self.parent.conn.deleteAppointment(tuple(str(idcita)))
+        self.parent.conn.deleteAppointment(str(idcita))
         
         # Recarga la pantalla
         self.change_page("Trabajos")

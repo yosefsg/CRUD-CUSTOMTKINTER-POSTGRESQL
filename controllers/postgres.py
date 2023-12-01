@@ -92,7 +92,7 @@ class Connection:
         else:
             return None
     
-    def postAppointments(self, idcita, data):       
+    def postAppointments(self, data):       
         sql = """
         INSERT INTO CITA (idcliente, fecha, cotizacion, descripcion, lugar)
         VALUES (%s, %s, %s, %s, %s);
@@ -120,10 +120,10 @@ class Connection:
         
     def deleteAppointment(self, data):
         sql = """
-        DELETE FROM CITA WHERE idcita = %s;
-        """
+        DELETE FROM CITA WHERE idcita = {};
+        """.format(data)
         
-        self.cursor.execute(sql, data)
+        self.cursor.execute(sql)
         self.conn.commit()
                 
         self.close()
