@@ -17,14 +17,7 @@ class TablaCredito(ctk.CTkFrame):
        
             # Obtener datos de la tabla
             fetch_credito = parent.conn.getCredit()  # Reemplaza con la función adecuada de postgres.py
-<<<<<<< HEAD
       
-=======
-        except Exception as e:
-            print("Error fetching creditos:", e)
-            fetch_credito = []  # Puedes asignar una lista vacía en caso de error
-
->>>>>>> 1ad4727fdbf1efb0bc9ca4162644d36cc133a09d
         # Organizar los datos
         data = [(
             credito['idcredito'],
