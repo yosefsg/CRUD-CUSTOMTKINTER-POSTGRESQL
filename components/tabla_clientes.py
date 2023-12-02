@@ -1,9 +1,10 @@
 import customtkinter as ctk
 import colors
+import controllers.postgres as pg
 from tkfontawesome import icon_to_image
 import functools
 
-class TablaTrabajos(ctk.CTkFrame):
+class TablaClientes(ctk.CTkFrame):
     def __init__(self, parent, change_page):
         super().__init__(parent)
         self.parent = parent
@@ -12,10 +13,10 @@ class TablaTrabajos(ctk.CTkFrame):
         
          # Iconos que se van a usar
         _edit_icon = icon_to_image('edit', fill=colors.grey, scale_to_width=16)
-        _check_icon = icon_to_image('check-circle', fill=colors.grey, scale_to_width=16)
+        _trash_icon = icon_to_image('trash-alt', fill=colors.grey, scale_to_width=16)
         
         # Estas son las cabeceras que indican qué va en cada columna
-        headers = ["ID", "Cliente", "Fecha", "Cotizacion", "Lugar", "Descripcion" ]
+        headers = ["ID", "Nombre", "Telefono", "Dirección", "Correo"]
         
         # Esta cosa hace que se muestren los headers en la app, creando objetos de Etiqueta por cada header 
         for col, header in enumerate(headers):
@@ -24,21 +25,20 @@ class TablaTrabajos(ctk.CTkFrame):
         
         # Esto es importante, si van a hacer alguna tabla, usen el "get" correspondiente
         # En este caso, estoy trayendo todas las citas. Pueden ver cómo funciona en ./controllers/postgres.py
-        fetch_citas = parent.conn.getAppointments() # Esto lo van a cambiar por el que corresponde a la pantalla
+        fetch_clientes = parent.conn.getClients() # Esto lo van a cambiar por el que corresponde a la pantalla
         
         # Este es el dataset que deberán organizar. Será usado para mostrarlo en la app
         # Con objetos de Etiqueta (ctk.CTkLabel)
         # Cambien la variable "cita" por cualquier otra cosa para que se entienda bien
         # Lo que está entre comillas simples es EL NOMBRE DE LA COLUMNA QUE VIENE EN NUESTRA BASE DE DATOS
         data = [(
-                cita['idcita'],
-                cita['idcliente'],
-                cita['fecha'],
-                cita['cotizacion'],
-                cita['lugar'],
-                cita['descripcion']
+                cliente['idcliente'],
+                cliente['nombre']+' '+cliente['apellidop']+' '+cliente['apellidom'], # Nombre completo
+                cliente['telefono'], # Telefono
+                cliente['calle']+' '+cliente['numext']+ '. ' + cliente['colonia']+'. '+cliente['codigopostal'], # Dirección completa
+                cliente['correo'] # Correo
                 )
-                for cita in fetch_citas]
+                for cliente in fetch_clientes]
         
 
         # Esto muestra en la app cada registro del dataset que armaron anteriormente.
@@ -52,22 +52,20 @@ class TablaTrabajos(ctk.CTkFrame):
                         image=_edit_icon,
                         text="",
                         fg_color=colors.darkbrown,
-                        hover_color=colors.brown,
                         width=10,
                         height=10,
                         corner_radius=20,
-                        command=functools.partial(self.editAppointment, data[i-1][0])).grid(row=i, column=j, sticky='e')
+                        command=functools.partial(self.editClient, data[i-1][0])).grid(row=i, column=j, sticky='e')
             
             # Botón de eliminar
             ctk.CTkButton(self,
-                        image=_check_icon,
+                        image=_trash_icon,
                         text="",
                         fg_color=colors.darkbrown,
-                        hover_color=colors.brown,
                         width=10,
                         height=10,
                         corner_radius=20,
-                        command=functools.partial(self.deleteAppointment, data[i-1][0])).grid(row=i, column=j+1, sticky='e')
+                        command=functools.partial(self.deleteClient, data[i-1][0])).grid(row=i, column=j+1, sticky='e')
                 
         # Esto, también importante, es para modificar el tamaño horizontal de cada columna
         # De la siguiente función:
@@ -76,23 +74,22 @@ class TablaTrabajos(ctk.CTkFrame):
         # - el segundo parámetro (weight=1) indica el tamaño horizontal que le toca A ESA COLUMNA EN ESPECIFICO
         
         self.grid_columnconfigure(0, weight=1) # ID
-        self.grid_columnconfigure(1, weight=1) # Cliente
-        self.grid_columnconfigure(2, weight=1) # Fecha
-        self.grid_columnconfigure(3, weight=1) # Cotizacion
-        self.grid_columnconfigure(4, weight=2) # Lugar
-        self.grid_columnconfigure(5, weight=3) # Descripcion
+        self.grid_columnconfigure(1, weight=2) # Nombre
+        self.grid_columnconfigure(2, weight=1) # Telefono
+        self.grid_columnconfigure(3, weight=2) # Dirección
+        self.grid_columnconfigure(4, weight=2) # Correo
+        self.grid_columnconfigure(5, weight=1) # Boton edit
         self.grid_columnconfigure(6, weight=1) # Boton edit
-        self.grid_columnconfigure(7, weight=1) # Boton edit
         
         self.pack(expand=True, fill='both')
         
-    def deleteAppointment(self, idcita):
-        self.parent.conn.deleteAppointment(str(idcita))
+    def deleteClient(self, idcliente):
+        self.parent.conn.deleteClient(str(idcliente))
         
         # Recarga la pantalla
-        self.change_page("Trabajos")
+        self.change_page("Clientes")
         
-    def editAppointment(self, idcita):
-        cita = self.parent.conn.getAppointment(idcita)
+    def editClient(self, idcliente):
+        client = self.parent.conn.getClient(idcliente)
         
-        self.change_page("AgendarCita", cita)
+        self.change_page("RegistroCliente", client)

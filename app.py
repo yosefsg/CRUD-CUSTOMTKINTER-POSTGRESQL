@@ -25,5 +25,5 @@ class App(ctk.CTk):
 
 if __name__ == '__main__':
     
-    App(1080, 580)
+    App(1200, 580)
     

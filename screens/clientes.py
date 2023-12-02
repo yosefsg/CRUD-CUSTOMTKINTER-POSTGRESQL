@@ -2,10 +2,9 @@ import customtkinter as ctk
 import colors
 from components.header import Header
 import controllers.postgres as pg
-from components.tabla_trabajos import TablaTrabajos
+from components.tabla_clientes import TablaClientes
 
-
-class Trabajos(ctk.CTkFrame):
+class Clientes(ctk.CTkFrame):
     def __init__(self, parent, change_page):
         super().__init__(parent)
         
@@ -13,7 +12,7 @@ class Trabajos(ctk.CTkFrame):
         self.change_page = change_page
         
         self.configure(corner_radius=0, fg_color=colors.grey)
-        Header(self, "Citas Pendientes")
+        Header(self, "Clientes")
         
         # Para consumir las "apis" y armar la conexión
         self.conn = pg.Connection()
@@ -22,13 +21,13 @@ class Trabajos(ctk.CTkFrame):
         ctk.CTkButton(self,
                       width=140,
                       height=32,
-                      text="Agregar Cita",
+                      text="Agregar Cliente",
                       fg_color=colors.darkbrown,
                       hover_color=colors.brown,
                       font=("Helvetica", 15),
-                      command=lambda: self.change_page("AgendarCita")
+                      command=lambda: self.change_page("RegistroCliente")
         ).pack(padx=20, pady=15, side="top", anchor='e')
         
-        TablaTrabajos(self, self.change_page)
+        TablaClientes(self, self.change_page)
         
         self.pack(fill='both', expand=True)

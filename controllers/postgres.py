@@ -27,16 +27,6 @@ class Connection:
     def close(self):
         self.conn.close()
     
-    # Para las citas
-    def getAppointments(self):
-        sql = """
-        SELECT * FROM CITA;
-        """
-        self.cursor.execute(sql)
-        rows = self.cursor.fetchall()
-        
-        return ([dict(row) for row in rows])
-    
     def getClients(self):
         sql = """
         SELECT * FROM CLIENTE;
@@ -46,6 +36,62 @@ class Connection:
         rows = self.cursor.fetchall()
         
         return ([dict(row) for row in rows])
+    
+    def getClient(self, data):
+        sql = """
+        SELECT * FROM CLIENTE WHERE idcliente = {};
+        """.format(data)
+        self.cursor.execute(sql)
+        row = self.cursor.fetchone()
+        
+        if row:
+            return dict(row)
+        else:
+            return None
+    
+    def deleteClient(self, data):
+        sql = """
+        DELETE FROM CLIENTE WHERE idcliente = {};
+        """.format(data)
+        
+        try:
+            self.cursor.execute(sql)
+            self.conn.commit()
+        except Exception as e:
+            print("SQL ERROR: ", e)
+            self.conn.rollback()
+                
+        self.close()
+        
+    def postClient(self, data):
+        sql = """
+        INSERT INTO CLIENTE (nombre, apellidop, apellidom, calle, colonia, codigopostal, numext, numint, telefono, correo)
+        VALUES
+            (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s);
+        """
+        try:
+            self.cursor.execute(sql, data)
+            self.conn.commit()
+        except Exception as e:
+            print("SQL ERROR: ", e)
+            self.conn.rollback()
+                
+        self.close()
+        
+    def putClient(self, idcliente, data):
+        sql = """
+        UPDATE CLIENTE
+        SET nombre = %s, apellidop = %s, apellidom = %s, calle  = %s, colonia  = %s, codigopostal  = %s, numext  = %s, numint  = %s, telefono  = %s, correo = %s
+        WHERE idcliente = {}
+        """.format(idcliente)
+        
+        try:
+            self.cursor.execute(sql, data)
+            self.conn.commit()
+        except Exception as e:
+            print("SQL ERROR: ", e)
+            self.conn.rollback()
+        
     
     # Para el historial
     def getHistory(self):
@@ -79,17 +125,69 @@ class Connection:
         
         return ([dict(row) for row in rows])
     
-    def postAppointments(self, data):
+        # Para las citas
+    def getAppointments(self):
+        sql = """
+        SELECT * FROM CITA;
+        """
+        self.cursor.execute(sql)
+        rows = self.cursor.fetchall()
+        
+        return ([dict(row) for row in rows])
+    
+        # Para una cita
+    def getAppointment(self, data):
+        sql = """
+        SELECT * FROM CITA WHERE idcita = {};
+        """.format(data)
+        self.cursor.execute(sql)
+        row = self.cursor.fetchone()
+        
+        if row:
+            return dict(row)
+        else:
+            return None
+    
+    def postAppointments(self, data):       
         sql = """
         INSERT INTO CITA (idcliente, fecha, cotizacion, descripcion, lugar)
         VALUES (%s, %s, %s, %s, %s);
         """
         
-        self.cursor.execute(sql, data)
-        self.conn.commit()
-                
-        self.close()
+        try:
+            self.cursor.execute(sql, data)
+            self.conn.commit()
+        except Exception as e:
+            print("SQL ERROR: ", e)
+            self.conn.rollback()
                
         # self.cursor.close()
+        
+    def putAppointment(self, idcita, data):
+        sql = """
+        UPDATE CITA
+        SET
+            idcliente = %s, fecha = %s, cotizacion = %s, descripcion = %s, lugar = %s
+        WHERE idcita = {};
+        """.format(idcita)
+        
+        try:
+            self.cursor.execute(sql, data)
+            self.conn.commit()
+        except Exception as e:
+            print("SQL ERROR: ", e)
+            self.conn.rollback()
+        
+    def deleteAppointment(self, data):
+        sql = """
+        DELETE FROM CITA WHERE idcita = {};
+        """.format(data)
+        
+        try:
+            self.cursor.execute(sql)
+            self.conn.commit()
+        except Exception as e:
+            print("SQL ERROR: ", e)
+            self.conn.rollback()
         
     # Si ven necesario agregar más controladores, adelante

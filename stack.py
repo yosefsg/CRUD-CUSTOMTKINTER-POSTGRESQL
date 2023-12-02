@@ -1,4 +1,5 @@
 from screens.trabajos import Trabajos
+from screens.clientes import Clientes
 from screens.registrocliente import RegistroCliente
 from screens.historial import Historial
 from screens.inventario import Inventario
@@ -23,11 +24,12 @@ class PageStack(ctk.CTkFrame):
                 
         return {
                 "Trabajos": Trabajos,
-                "RegistroCliente": RegistroCliente,
+                "Clientes": Clientes,
                 "Historial": Historial,
                 "Inventario": Inventario,
                 "Creditos": Creditos,
-                "AgendarCita": AgendarCita
+                "AgendarCita": AgendarCita,
+                "RegistroCliente": RegistroCliente
                 }
         
         
@@ -39,11 +41,11 @@ class PageStack(ctk.CTkFrame):
         except Exception as e:
             print("Error destroying screen from stack: ", e)
             
-    def switch_page(self, screen):
+    def switch_page(self, screen, *args):
         # Limpiando la pantalla para hacer el cambio
         self.hide_pages()
         
         # print(self.stack[screen])
         # Cambiando de pantalla
         Current_screen = self.stack[screen]
-        Current_screen(self, self.switch_page)
+        Current_screen(self, self.switch_page, *args)

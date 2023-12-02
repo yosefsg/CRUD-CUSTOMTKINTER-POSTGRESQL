@@ -62,7 +62,7 @@ class SideBar(ctk.CTkFrame):
         
         registrarCliente = ctk.CTkButton(
             self,
-            text="Registrar Cliente",
+            text="Clientes",
             text_color=colors.grey,
             font=('Helvetica', 19),
             image=_clientIcon,
@@ -72,7 +72,7 @@ class SideBar(ctk.CTkFrame):
             hover_color=colors.darkbrown,
             height=57,
             anchor='w',
-            command=lambda: self.stack.switch_page('RegistroCliente')
+            command=lambda: self.stack.switch_page('Clientes')
         ).pack(fill='x')
         
         historial = ctk.CTkButton(
