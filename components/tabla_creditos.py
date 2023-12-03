@@ -37,6 +37,7 @@ class TablaCredito(ctk.CTkFrame):
         self.grid_columnconfigure(2, weight=1)  # Fecha
         self.grid_columnconfigure(3, weight=1)  # Límite de Pago
 
+<<<<<<< HEAD
         self.pack(expand=True, fill='both')
         
         
@@ -84,3 +85,6 @@ class TablaAbonos(ctk.CTkFrame):
         self.grid_columnconfigure(3, weight=1)  # Monto
 
         self.pack(expand=True, fill='both')
+=======
+        self.pack(expand=True, fill='both', anchor='ne')
+>>>>>>> a48f19567f30d855775d2378d44205acaa6a22f9
