@@ -121,7 +121,7 @@ class NuevoCredito(ctk.CTkFrame):
     def sendInfo(self, fields):
 
         # Si es el caso de editar una cita
-        if self.idcita != None:
+        if self.idcredito != None:
             return self.editInfo(fields)
         
         self.conn.postCredit((

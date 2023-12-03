@@ -2,11 +2,10 @@ import customtkinter as ctk
 import colors
 from components.header import Header
 import controllers.postgres as pg
-from components.tabla_trabajos import TablaTrabajos
 from tkcalendar import DateEntry
 from tkcalendar import Calendar
-      
-class Form(ctk.CTkFrame):
+
+class LeftForm(ctk.CTkFrame):
     def __init__(self, parent, args):
         super().__init__(parent)
         self.configure(fg_color=colors.white)
@@ -85,9 +84,9 @@ class NuevoCreditoFrame(ctk.CTkFrame):
         self.pack(fill='both', expand=True, padx=20, pady=20)
         
     def getValues(self):
-        return {**self.form}
+        return {**self.left, **self.right}
 
-class NuevoCredito(ctk.CTkFrame):
+class Abonos(ctk.CTkFrame):
     def __init__(self, parent, change_page, *args): 
         super().__init__(parent)
         
