@@ -23,9 +23,9 @@ class TablaCredito(ctk.CTkFrame):
             credito['fecha'],
             credito['limitepago'],
             "$"+str(credito['totalapagar']),
-            "$"+str(credito['restante'])
+            ("$"+(str(credito['restante']) if credito['restante'] != None else str(credito['totalapagar']))
             
-            )
+            ))
             for credito in fetch_credito]
 
         # Mostrar datos en la tabla
