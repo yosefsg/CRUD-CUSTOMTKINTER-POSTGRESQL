@@ -2,62 +2,75 @@ import customtkinter as ctk
 import colors
 from components.header import Header
 import controllers.postgres as pg
-<<<<<<< HEAD
 from components.tabla_trabajos import TablaTrabajos
-=======
->>>>>>> b434637119dd49fe9b9ba8bae3634713888c1580
-
-class Abonar(ctk.CTkFrame):
+from tkcalendar import DateEntry
+from tkcalendar import Calendar
+      
+class Form(ctk.CTkFrame):
     def __init__(self, parent, args):
         super().__init__(parent)
         self.configure(fg_color=colors.white)
         
         info = dict(*args)
         
-        ctk.CTkLabel(self, text="ID Crédito", font=("Helvetica", 25)).pack(anchor='w')
-        self.id_credito = ctk.CTkEntry(self, fg_color=colors.grey, border_width=1, corner_radius=7, width=250, height=40)
-        self.id_credito.pack(pady=15, anchor='w')
+        ctk.CTkLabel(self, text="ID Cliente", font=("Helvetica", 32)).pack()
+        self.idcliente = ctk.CTkTextbox(self,
+                                     fg_color=colors.grey,
+                                     border_width=1,
+                                     corner_radius=7,
+                                     width=350,
+                                     height=40
+                                     )
+        self.idcliente.pack(pady=15)
         
         try:
-            self.id_credito.insert(0, info['id_credito'])
+            self.idcliente.insert(1.0, info['idcliente'])
         except:
-            print("No args")
-            
-        ctk.CTkLabel(self, text="Monto a Abonar", font=("Helvetica", 25)).pack(anchor='w')
-        self.monto_abono = ctk.CTkEntry(self, fg_color=colors.grey, border_width=1, corner_radius=7, width=250, height=40)
-        self.monto_abono.pack(pady=15, anchor='w')
+            print("No idcliente")
+        
+        ctk.CTkLabel(self, text="Total a pagar", font=("Helvetica", 32)).pack()
+        self.totalapagar = ctk.CTkTextbox(self,
+                                     fg_color=colors.grey,
+                                     border_width=1,
+                                     corner_radius=7,
+                                     width=350,
+                                     height=40
+                                     )
+        self.totalapagar.pack(pady=15)
         
         try:
-            self.monto_abono.insert(0, info['monto_abono'])
+            self.totalapagar.insert(1.0, info['totalapagar'])
         except:
-            print("No args")
+            print("No totalapagar")
         
-        
-        
-        ctk.CTkLabel(self, text="Total a Pagar", font=("Helvetica", 25)).pack(anchor='w')
-        self.total_a_pagar = ctk.CTkEntry(self, fg_color=colors.grey, border_width=1, corner_radius=7, width=250, height=40)
-        self.total_a_pagar.pack(pady=15, anchor='w')
+        ctk.CTkLabel(self, text="Límite de pago", font=("Helvetica", 32)).pack()
+        self.limitepago = ctk.CTkTextbox(self,
+                                     fg_color=colors.grey,
+                                     border_width=1,
+                                     corner_radius=7,
+                                     width=350,
+                                     height=50
+                                     )
+        self.limitepago.pack(pady=15)
         
         try:
-            self.total_a_pagar.insert(0, info['total_a_pagar'])
-        except:
-            print("No args")
+            self.limitepago.insert(1.0, info['limitepago'])
+        except Exception as e:
+            print("No limitepago: ", e)
         
-        self.pack(side='left', padx=20, pady=20, anchor='nw')
+        self.pack(padx=20, pady=20, anchor='nw')
+        
     
     def getValues(self):
+        # Devuelve los campos de texto
         return {
-            "id_credito": self.id_credito,
-            "monto_abono": self.monto_abono,
-            "total_a_pagar": self.total_a_pagar,
+            "idcliente": self.idcliente,
+            "limitepago": self.limitepago,
+            "totalapagar": self.totalapagar
         }
 
-<<<<<<< HEAD
-class AbonoFrame(ctk.CTkFrame):
-    def __init__(self, parent, change_page, args):
-=======
 
-class AbonosFrame(ctk.CTkFrame):
+class NuevoCreditoFrame(ctk.CTkFrame):
     def __init__(self, parent, args):
         super().__init__(parent)
         self.configure(corner_radius=15, fg_color=colors.white)
@@ -67,50 +80,44 @@ class AbonosFrame(ctk.CTkFrame):
         self.cursor = self.conn.cursor
         
         # Frame para la parte de la izquierda XD
-        self.left = LeftForm(self, args).getValues()
-        
-        # Frame para la parte de la derecha XD
-        self.right = RightForm(self, args).getValues()
+        self.form = Form(self, args).getValues()
         
         self.pack(fill='both', expand=True, padx=20, pady=20)
         
     def getValues(self):
-        return {**self.left, **self.right}
-        
-class Abonos(ctk.CTkFrame):
+        return {**self.form}
+
+class NuevoCredito(ctk.CTkFrame):
     def __init__(self, parent, change_page, *args): 
->>>>>>> b434637119dd49fe9b9ba8bae3634713888c1580
         super().__init__(parent)
         
+        # Recuperando el ID de la cita si es que se desea editar un registro
         try:
-            self.id_abono = dict(args)['id_abono']
+            self.idcita = dict(*args)['idcredito']
         except:
-            self.id_abono = None
+            self.idcita = None
         
         # Para cambiar de pantalla
         self.change_page = change_page
 
         self.configure(corner_radius=0, fg_color=colors.grey)
-        Header(self, "Realizar Abono")
+        Header(self, "Nuevo Crédito")
         
+        # Para consumir las "apis" y armar la conexión
         self.conn = pg.Connection()
         self.cursor = self.conn.cursor
         
-<<<<<<< HEAD
-        fields = AbonoForm(self, args).getValues()
-=======
-        fields = AbonosFrame(self, args).getValues()
->>>>>>> b434637119dd49fe9b9ba8bae3634713888c1580
+        fields = NuevoCreditoFrame(self, args).getValues()
         
-        # Boton para realizar el abono
+        # Boton para registrar cita
         ctk.CTkButton(self,
                       width=250,
                       height=45,
-                      text="Realizar Abono",
+                      text="Registrar",
                       fg_color=colors.darkbrown,
                       hover_color=colors.brown,
                       text_color=colors.white,
-                      font=("Helvetica", 25, 'bold'),
+                      font=("Helvetica", 20, 'bold'),
                       command=lambda: self.sendInfo(fields)
         ).pack(pady=15, padx=20, side="bottom", anchor='center')
         
@@ -118,39 +125,33 @@ class Abonos(ctk.CTkFrame):
 
     def sendInfo(self, fields):
         
-        if self.id_abono is not None:
+        # Si es el caso de editar una cita
+        if self.idcita != None:
             return self.editInfo(fields)
         
-        self.conn.postAbono((
-            fields['id_credito'].get(),
-            fields['monto_abono'].get(),
-            fields['total_a_pagar'].get(),
-            
+        self.conn.postAppointments((
+            fields['idcliente'].get(),
+            fields['fecha'].get_date(),
+            fields['cotizacion'].get(),
+            fields['descripcion'].get("1.0", "end-1c"),
+            fields['lugar'].get("1.0", "end-1c")            
         ))
         
-<<<<<<< HEAD
-
-=======
         # Cambia a la screen de trabajos
         
-        self.change_page("Creditos")
+        self.change_page("Trabajos")
         
->>>>>>> b434637119dd49fe9b9ba8bae3634713888c1580
     def editInfo(self, fields):
-        # Lógica para editar un abono existente en la base de datos
-        self.conn.putAbono(
-            self.id_abono,
+        self.conn.putAppointment(
+            self.idcita,
             (
-                fields['id_credito'].get(),
-                fields['monto_abono'].get(),
-                fields['total_a_pagar'].get(),
-            )
-        )
+            fields['idcliente'].get(),
+            fields['fecha'].get(),
+            fields['cotizacion'].get(),
+            fields['descripcion'].get("1.0", "end-1c"),
+            fields['lugar'].get("1.0", "end-1c")            
+        ))
         
-<<<<<<< HEAD
-        self.change_page("Creditos") 
-=======
         # Cambia a la screen de trabajos
         
-        self.change_page("Creditos")
->>>>>>> b434637119dd49fe9b9ba8bae3634713888c1580
+        self.change_page("Trabajos")
