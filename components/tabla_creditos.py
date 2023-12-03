@@ -7,7 +7,7 @@ class TablaCredito(ctk.CTkFrame):
         self.configure(corner_radius=0, fg_color=colors.grey)
         
         # Encabezados de la tabla
-        headers = ["ID Crédito", "ID Cliente", "Fecha", "Límite de Pago"]
+        headers = ["ID Crédito", "ID Cliente", "Fecha", "Límite de Pago", "Total", "Restante"]
         
         # Crear etiquetas para los encabezados
         for col, header in enumerate(headers):
@@ -21,7 +21,10 @@ class TablaCredito(ctk.CTkFrame):
             credito['idcredito'],
             credito['idcliente'],
             credito['fecha'],
-            credito['limitepago']
+            credito['limitepago'],
+            "$"+str(credito['totalapagar']),
+            "$"+str(credito['restante'])
+            
             )
             for credito in fetch_credito]
 
@@ -36,5 +39,7 @@ class TablaCredito(ctk.CTkFrame):
         self.grid_columnconfigure(1, weight=1)  # ID Cliente
         self.grid_columnconfigure(2, weight=1)  # Fecha
         self.grid_columnconfigure(3, weight=1)  # Límite de Pago
+        self.grid_columnconfigure(4, weight=1)  # Límite de Pago
+        self.grid_columnconfigure(5, weight=1)  # Límite de Pago
 
         self.pack(expand=True, fill='both', anchor='ne')
