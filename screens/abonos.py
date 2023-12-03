@@ -2,9 +2,6 @@ import customtkinter as ctk
 import colors
 from components.header import Header
 import controllers.postgres as pg
-from components.tabla_trabajos import TablaTrabajos
-from tkcalendar import DateEntry
-from tkcalendar import Calendar
 
 class LeftForm(ctk.CTkFrame):
     def __init__(self, parent, args):
@@ -99,7 +96,7 @@ class RightForm(ctk.CTkFrame):
         }
 
 
-class AppointmentFrame(ctk.CTkFrame):
+class AbonosFrame(ctk.CTkFrame):
     def __init__(self, parent, args):
         super().__init__(parent)
         self.configure(corner_radius=15, fg_color=colors.white)
@@ -119,7 +116,7 @@ class AppointmentFrame(ctk.CTkFrame):
     def getValues(self):
         return {**self.left, **self.right}
 
-class AgendarCita(ctk.CTkFrame):
+class Abonos(ctk.CTkFrame):
     def __init__(self, parent, change_page, *args): 
         super().__init__(parent)
         
@@ -139,7 +136,7 @@ class AgendarCita(ctk.CTkFrame):
         self.conn = pg.Connection()
         self.cursor = self.conn.cursor
         
-        fields = AppointmentFrame(self, args).getValues()
+        fields = AbonosFrame(self, args).getValues()
         
         # Boton para registrar cita
         ctk.CTkButton(self,
@@ -171,7 +168,7 @@ class AgendarCita(ctk.CTkFrame):
         
         # Cambia a la screen de trabajos
         
-        self.change_page("Trabajos")
+        self.change_page("Creditos")
         
     def editInfo(self, fields):
         self.conn.putAppointment(
@@ -186,4 +183,4 @@ class AgendarCita(ctk.CTkFrame):
         
         # Cambia a la screen de trabajos
         
-        self.change_page("Trabajos")
+        self.change_page("Creditos")
