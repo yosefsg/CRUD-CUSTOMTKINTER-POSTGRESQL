@@ -117,7 +117,10 @@ class Connection:
     # Para la información que se mostrará en "Creditos"
     def getCredit(self):
         sql = """
-        SELECT * FROM CREDITO;
+        SELECT C.idcredito, C.idcliente, C.fecha, C.limitepago, A.totalapagar, A.totalapagar-A.monto AS restante
+        FROM CREDITO AS C
+        LEFT JOIN ABONOS AS A
+            ON C.idcredito = A.idcredito;
         """
         
         self.cursor.execute(sql)
