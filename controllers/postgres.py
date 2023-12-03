@@ -232,6 +232,7 @@ class Connection:
             print("SQL ERROR: ", e)
             self.conn.rollback()
             
+            
     # Abonos
     def postAbono(self, data):       
         sql = """
@@ -257,4 +258,18 @@ class Connection:
             return dict(row)
         else:
             return None
+        
+        
+    def postInventory(self, data):       
+        sql = """
+        INSERT INTO Inventario (idinventario, descripcion, cantidad)
+        VALUES (%s, %s, %s);
+        """
+        
+        try:
+            self.cursor.execute(sql, data)
+            self.conn.commit()
+        except Exception as e:
+            print("SQL ERROR: ", e)
+            self.conn.rollback()
     # Si ven necesario agregar más controladores, adelante

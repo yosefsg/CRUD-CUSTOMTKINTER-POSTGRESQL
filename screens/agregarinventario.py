@@ -58,7 +58,7 @@ class Form(ctk.CTkFrame):
         self.pack(padx=20, pady=20, anchor='nw')
         
     
-    def getValues(self):
+def getValues(self):
         # Devuelve los campos de texto
         return {
             "idinventario": self.idinventario,
@@ -79,6 +79,18 @@ class NuevoInventarioFrame(ctk.CTkFrame):
         # Frame para la parte de la izquierda XD
         self.form = Form(self, args).getValues()
         
+        ctk.CTkButton(self,
+                width=250,
+                height=45,
+                text="Registrar",
+                fg_color=colors.darkbrown,
+                hover_color=colors.brown,
+                text_color=colors.white,
+                font=("Helvetica", 20, 'bold'),
+                command=lambda: self.sendInfo(fields)
+        ).pack(pady=15, padx=20, side="bottom", anchor='center')
+        
+        
         self.pack(fill='both', expand=True, padx=20, pady=20)
         
     def getValues(self):
@@ -98,7 +110,7 @@ class AgregarInventario(ctk.CTkFrame):
         self.change_page = change_page
 
         self.configure(corner_radius=0, fg_color=colors.grey)
-        Header(self, "Nuevo Crédito")
+        Header(self, "Agregar al inventario")
         
         # Para consumir las "apis" y armar la conexión
         self.conn = pg.Connection()
@@ -122,33 +134,13 @@ class AgregarInventario(ctk.CTkFrame):
 
     def sendInfo(self, fields):
         
-        # Si es el caso de editar una cita
-        if self.idcita != None:
-            return self.editInfo(fields)
-        
         self.conn.postAppointments((
-            fields['idcliente'].get(),
-            fields['fecha'].get_date(),
-            fields['cotizacion'].get(),
-            fields['descripcion'].get("1.0", "end-1c"),
-            fields['lugar'].get("1.0", "end-1c")            
+            fields['idinventario'].get(),
+            fields['descripcion'].get_date(),
+            fields['cantidad'].get(),            
         ))
         
-        # Cambia a la screen de trabajos
-        
-        self.change_page("Trabajos")
-        
-    def editInfo(self, fields):
-        self.conn.putAppointment(
-            self.idcita,
-            (
-            fields['idcliente'].get(),
-            fields['fecha'].get(),
-            fields['cotizacion'].get(),
-            fields['descripcion'].get("1.0", "end-1c"),
-            fields['lugar'].get("1.0", "end-1c")            
-        ))
-        
-        # Cambia a la screen de trabajos
+        # Cambia a la screen de inventario
         
         self.change_page("Inventario")
+        
