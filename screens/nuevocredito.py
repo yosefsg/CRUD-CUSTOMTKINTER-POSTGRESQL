@@ -15,7 +15,7 @@ class Form(ctk.CTkFrame):
         info = dict(*args)
 
         ctk.CTkLabel(self, text="ID Cliente", font=("Helvetica", 32)).pack()
-        self.idcliente = ctk.CTkTextbox(self,
+        self.idcliente = ctk.CTkEntry(self,
                                      fg_color=colors.grey,
                                      border_width=1,
                                      corner_radius=7,
@@ -41,7 +41,7 @@ class Form(ctk.CTkFrame):
         self.pack(padx=20, pady=20, anchor='center')
         
         ctk.CTkLabel(self, text="Total a pagar", font=("Helvetica", 32)).pack()
-        self.totalapagar = ctk.CTkTextbox(self,
+        self.totalapagar = ctk.CTkEntry(self,
                                      fg_color=colors.grey,
                                      border_width=1,
                                      corner_radius=7,
