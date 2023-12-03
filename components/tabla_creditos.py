@@ -42,4 +42,4 @@ class TablaCredito(ctk.CTkFrame):
         self.grid_columnconfigure(2, weight=1)  # Fecha
         self.grid_columnconfigure(3, weight=1)  # Límite de Pago
 
-        self.pack(expand=True, fill='both')
+        self.pack(expand=True, fill='both', anchor='ne')

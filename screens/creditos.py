@@ -4,10 +4,38 @@ from components.header import Header
 import controllers.postgres as pg
 from components.tabla_creditos import TablaCredito  
 
+class OptionsFrame(ctk.CTkFrame):
+    def __init__(self, parent, change_page):
+        super().__init__(parent)
+        self.configure(corner_radius=0, fg_color=colors.grey)
+        
+        ctk.CTkButton(self,
+                      width=140,
+                      height=32,
+                      text="Nuevo Crédito",
+                      fg_color=colors.darkbrown,
+                      hover_color=colors.brown,
+                      font=("Helvetica", 15),
+                      command=lambda: self.change_page("AgendarCita")
+        ).pack(padx=20, pady=15, side="right", anchor='ne')
+        
+        ctk.CTkButton(self,
+                      width=140,
+                      height=32,
+                      text="Abonar",
+                      fg_color=colors.darkbrown,
+                      hover_color=colors.brown,
+                      font=("Helvetica", 15),
+                      command=lambda: self.change_page("AgendarCita")
+        ).pack(padx=20, pady=15, side="right", anchor='ne')
+        
+        self.pack(fill='x')
+        
+
 class Creditos(ctk.CTkFrame):
     def __init__(self, parent, change_page):
         super().__init__(parent)
-        self.configure(corner_radius=0)
+        self.configure(corner_radius=0, fg_color=colors.grey)
         
         # Para cambiar de pantalla
         self.change_page = change_page
@@ -18,8 +46,8 @@ class Creditos(ctk.CTkFrame):
         self.conn = pg.Connection()
         self.cursor = self.conn.cursor
         
-        TablaCredito(self)  
+        OptionsFrame(self, change_page)
         
-        # ctk.CTkLabel(self, text="CRÉDITO").pack()
+        TablaCredito(self)  
         
         self.pack(fill='both', expand=True)
