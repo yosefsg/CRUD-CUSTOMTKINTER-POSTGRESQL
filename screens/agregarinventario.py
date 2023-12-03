@@ -10,28 +10,13 @@ class Form(ctk.CTkFrame):
         
         info = dict(*args)
         
-        ctk.CTkLabel(self, text="IDInventario", font=("Helvetica", 32)).pack()
-        self.idinventario = ctk.CTkTextbox(self,
+        ctk.CTkLabel(self, text="Descripcion", font=("Helvetica", 18)).pack()
+        self.descripcion = ctk.CTkEntry(self,
                                      fg_color=colors.grey,
                                      border_width=1,
                                      corner_radius=7,
                                      width=350,
-                                     height=40
-                                     )
-        self.idinventario.pack(pady=15)
-        
-        try:
-            self.inventario.insert(1.0, info['idinventario'])
-        except:
-            print("No idinventario")
-        
-        ctk.CTkLabel(self, text="Descripcion", font=("Helvetica", 32)).pack()
-        self.descripcion = ctk.CTkTextbox(self,
-                                     fg_color=colors.grey,
-                                     border_width=1,
-                                     corner_radius=7,
-                                     width=350,
-                                     height=100
+                                     height=80
                                      )
         self.descripcion.pack(pady=15)
         
@@ -40,8 +25,8 @@ class Form(ctk.CTkFrame):
         except:
             print("No descripcion")
         
-        ctk.CTkLabel(self, text="Cantidad", font=("Helvetica", 32)).pack()
-        self.cantidad = ctk.CTkTextbox(self,
+        ctk.CTkLabel(self, text="Cantidad", font=("Helvetica", 18)).pack()
+        self.cantidad = ctk.CTkEntry(self,
                                      fg_color=colors.grey,
                                      border_width=1,
                                      corner_radius=7,
@@ -56,12 +41,11 @@ class Form(ctk.CTkFrame):
             print("No cantidad: ", e)
         
         self.pack(padx=20, pady=20, anchor='nw')
-        
     
-def getValues(self):
+    def getValues(self):
         # Devuelve los campos de texto
-        return {
-            "idinventario": self.idinventario,
+        return 
+        {
             "descripcion": self.descripcion,
             "cantidad": self.cantidad
         }
@@ -78,19 +62,6 @@ class NuevoInventarioFrame(ctk.CTkFrame):
         
         # Frame para la parte de la izquierda XD
         self.form = Form(self, args).getValues()
-        
-        ctk.CTkButton(self,
-                width=250,
-                height=45,
-                text="Registrar",
-                fg_color=colors.darkbrown,
-                hover_color=colors.brown,
-                text_color=colors.white,
-                font=("Helvetica", 20, 'bold'),
-                command=lambda: self.sendInfo(fields)
-        ).pack(pady=15, padx=20, side="bottom", anchor='center')
-        
-        
         self.pack(fill='both', expand=True, padx=20, pady=20)
         
     def getValues(self):
@@ -99,12 +70,6 @@ class NuevoInventarioFrame(ctk.CTkFrame):
 class AgregarInventario(ctk.CTkFrame):
     def __init__(self, parent, change_page, *args): 
         super().__init__(parent)
-        
-        # # Recuperando el ID de la cita si es que se desea editar un registro
-        # try:
-        #     self.idcita = dict(*args)['idcredito']
-        # except:
-        #     self.idcita = None
         
         # Para cambiar de pantalla
         self.change_page = change_page
@@ -122,7 +87,7 @@ class AgregarInventario(ctk.CTkFrame):
         ctk.CTkButton(self,
                       width=250,
                       height=45,
-                      text="Registrar",
+                      text="Añadir",
                       fg_color=colors.darkbrown,
                       hover_color=colors.brown,
                       text_color=colors.white,
@@ -134,9 +99,8 @@ class AgregarInventario(ctk.CTkFrame):
 
     def sendInfo(self, fields):
         
-        self.conn.postAppointments((
-            fields['idinventario'].get(),
-            fields['descripcion'].get_date(),
+        self.conn.postInventory((
+            fields['descripcion'].get(),
             fields['cantidad'].get(),            
         ))
         

@@ -262,8 +262,8 @@ class Connection:
         
     def postInventory(self, data):       
         sql = """
-        INSERT INTO Inventario (idinventario, descripcion, cantidad)
-        VALUES (%s, %s, %s);
+        INSERT INTO Inventario (descripcion, cantidad)
+        VALUES (%s, %s);
         """
         
         try:
