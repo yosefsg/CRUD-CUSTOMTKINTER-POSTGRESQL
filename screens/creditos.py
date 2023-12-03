@@ -17,7 +17,7 @@ class OptionsFrame(ctk.CTkFrame):
                       fg_color=colors.darkbrown,
                       hover_color=colors.brown,
                       font=("Helvetica", 15),
-                      command=lambda: self.change_page("AgendarCita")
+                      command=lambda: change_page("AgendarCita")
         ).pack(padx=20, pady=15, side="right", anchor='ne')
         
         ctk.CTkButton(self,
@@ -27,7 +27,11 @@ class OptionsFrame(ctk.CTkFrame):
                       fg_color=colors.darkbrown,
                       hover_color=colors.brown,
                       font=("Helvetica", 15),
+<<<<<<< HEAD
                       command=lambda: self.change_page("Abonar")
+=======
+                      command=lambda: change_page("Abonos")
+>>>>>>> b434637119dd49fe9b9ba8bae3634713888c1580
         ).pack(padx=20, pady=15, side="right", anchor='ne')
         
         self.pack(fill='x')

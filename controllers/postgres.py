@@ -115,9 +115,9 @@ class Connection:
         return ([dict(row) for row in rows])
     
     # Para la información que se mostrará en "Creditos"
-    def getCredit(self):
+    def getCredits(self):
         sql = """
-        SELECT C.idcredito, C.idcliente, C.fecha, C.limitepago, A.totalapagar, A.totalapagar-A.monto AS restante
+        SELECT C.idcredito, C.idcliente, C.fecha, C.limitepago, C.totalapagar, C.totalapagar-A.monto AS restante
         FROM CREDITO AS C
         LEFT JOIN ABONOS AS A
             ON C.idcredito = A.idcredito;
@@ -127,6 +127,46 @@ class Connection:
         rows = self.cursor.fetchall()
         
         return ([dict(row) for row in rows])
+    
+    def getCredit(self, data):
+        sql = """
+        SELECT * FROM CREDITO WHERE idcredito = {};
+        """.format(data)
+        self.cursor.execute(sql)
+        row = self.cursor.fetchone()
+        
+        if row:
+            return dict(row)
+        else:
+            return None
+    # Agregar un nuevo crédito
+    def postCredit(self, data):   
+        
+        # Insertando a la tabla de Credito    
+        sql = """
+        INSERT INTO CREDITO (idcliente, fecha, limitepago)
+        VALUES (%s, %s, %s);
+        """
+        try:
+            self.cursor.execute(sql, data)
+            self.conn.commit()
+        except Exception as e:
+            print("SQL ERROR: ", e)
+            self.conn.rollback()
+            
+        # Insertando a la tabla de Abonos para asignar el total a pagar    
+        sql = """
+        INSERT INTO ABONOS (idcliente, fecha, limitepago)
+        VALUES (%s, %s, %s);
+        """
+        
+        try:
+            self.cursor.execute(sql, data)
+            self.conn.commit()
+        except Exception as e:
+            print("SQL ERROR: ", e)
+            self.conn.rollback()
+        
     
         # Para las citas
     def getAppointments(self):
@@ -192,5 +232,30 @@ class Connection:
         except Exception as e:
             print("SQL ERROR: ", e)
             self.conn.rollback()
+            
+    # Abonos
+    def postAbono(self, data):       
+        sql = """
+        INSERT INTO ABONOS (idcredito, monto)
+        VALUES (%s, %s);
+        """
         
+        try:
+            self.cursor.execute(sql, data)
+            self.conn.commit()
+        except Exception as e:
+            print("SQL ERROR: ", e)
+            self.conn.rollback()
+            
+    def getAbono(self, data):
+        sql = """
+        SELECT * FROM ABONOS WHERE idcredito = {};
+        """.format(data)
+        self.cursor.execute(sql)
+        row = self.cursor.fetchone()
+        
+        if row:
+            return dict(row)
+        else:
+            return None
     # Si ven necesario agregar más controladores, adelante

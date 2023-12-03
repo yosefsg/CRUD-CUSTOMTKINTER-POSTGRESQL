@@ -2,7 +2,10 @@ import customtkinter as ctk
 import colors
 from components.header import Header
 import controllers.postgres as pg
+<<<<<<< HEAD
 from components.tabla_trabajos import TablaTrabajos
+=======
+>>>>>>> b434637119dd49fe9b9ba8bae3634713888c1580
 
 class Abonar(ctk.CTkFrame):
     def __init__(self, parent, args):
@@ -49,8 +52,34 @@ class Abonar(ctk.CTkFrame):
             "total_a_pagar": self.total_a_pagar,
         }
 
+<<<<<<< HEAD
 class AbonoFrame(ctk.CTkFrame):
     def __init__(self, parent, change_page, args):
+=======
+
+class AbonosFrame(ctk.CTkFrame):
+    def __init__(self, parent, args):
+        super().__init__(parent)
+        self.configure(corner_radius=15, fg_color=colors.white)
+        
+        # Para consumir las "apis" y armar la conexión
+        self.conn = pg.Connection()
+        self.cursor = self.conn.cursor
+        
+        # Frame para la parte de la izquierda XD
+        self.left = LeftForm(self, args).getValues()
+        
+        # Frame para la parte de la derecha XD
+        self.right = RightForm(self, args).getValues()
+        
+        self.pack(fill='both', expand=True, padx=20, pady=20)
+        
+    def getValues(self):
+        return {**self.left, **self.right}
+
+class Abonos(ctk.CTkFrame):
+    def __init__(self, parent, change_page, *args): 
+>>>>>>> b434637119dd49fe9b9ba8bae3634713888c1580
         super().__init__(parent)
         
         try:
@@ -67,7 +96,11 @@ class AbonoFrame(ctk.CTkFrame):
         self.conn = pg.Connection()
         self.cursor = self.conn.cursor
         
+<<<<<<< HEAD
         fields = AbonoForm(self, args).getValues()
+=======
+        fields = AbonosFrame(self, args).getValues()
+>>>>>>> b434637119dd49fe9b9ba8bae3634713888c1580
         
         # Boton para realizar el abono
         ctk.CTkButton(self,
@@ -95,7 +128,14 @@ class AbonoFrame(ctk.CTkFrame):
             
         ))
         
+<<<<<<< HEAD
 
+=======
+        # Cambia a la screen de trabajos
+        
+        self.change_page("Creditos")
+        
+>>>>>>> b434637119dd49fe9b9ba8bae3634713888c1580
     def editInfo(self, fields):
         # Lógica para editar un abono existente en la base de datos
         self.conn.putAbono(
@@ -107,4 +147,10 @@ class AbonoFrame(ctk.CTkFrame):
             )
         )
         
+<<<<<<< HEAD
         self.change_page("Creditos") 
+=======
+        # Cambia a la screen de trabajos
+        
+        self.change_page("Creditos")
+>>>>>>> b434637119dd49fe9b9ba8bae3634713888c1580

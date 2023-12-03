@@ -8,13 +8,13 @@ from components.tabla_historial import TablaHistorial
 class Historial(ctk.CTkFrame):
     def __init__(self, parent, change_page):
         super().__init__(parent)
-        self.configure(corner_radius=0)
+        self.configure(corner_radius=0, fg_color = colors.grey)
+        # Cabecera con título
+        Header(self, "Historial")
         
         # Para cambiar de pantalla
         self.change_page = change_page
         
-        # Cabecera con título
-        Header(self, "Historial")
         
         self.conn = pg.Connection()
         self.cursor = self.conn.cursor

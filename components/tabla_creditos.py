@@ -14,7 +14,7 @@ class TablaCredito(ctk.CTkFrame):
             etiqueta = ctk.CTkLabel(self, text=header, width=30, text_color=colors.darkbrown, font=("Helvetica", 18, "bold"))
             etiqueta.grid(row=0, column=col, sticky='wn')
 
-            fetch_credito = parent.conn.getCredit()  # Reemplaza con la función adecuada de postgres.py
+            fetch_credito = parent.conn.getCredits()  # Reemplaza con la función adecuada de postgres.py
 
         # Organizar los datos
         data = [(

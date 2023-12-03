@@ -4,6 +4,7 @@ from screens.registrocliente import RegistroCliente
 from screens.historial import Historial
 from screens.inventario import Inventario
 from screens.creditos import Creditos
+from screens.abonos import Abonos
 from screens.agendarcita import AgendarCita
 import customtkinter as ctk
 
@@ -29,7 +30,8 @@ class PageStack(ctk.CTkFrame):
                 "Inventario": Inventario,
                 "Creditos": Creditos,
                 "AgendarCita": AgendarCita,
-                "RegistroCliente": RegistroCliente
+                "RegistroCliente": RegistroCliente,
+                "Abonos": Abonos
                 }
         
         
