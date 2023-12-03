@@ -5,6 +5,7 @@ import controllers.postgres as pg
 from components.tabla_trabajos import TablaTrabajos
 from tkcalendar import DateEntry
 from tkcalendar import Calendar
+from datetime import datetime
       
 class Form(ctk.CTkFrame):
     def __init__(self, parent, args):
@@ -27,6 +28,17 @@ class Form(ctk.CTkFrame):
             self.idcliente.insert(1.0, info['idcliente'])
         except:
             print("No idcliente")
+            
+        ctk.CTkLabel(self, text="Límite de pago", font=("Helvetica", 32)).pack()
+        self.limitepago = DateEntry(self, width=30, background=colors.darkbrown, date_pattern='yyyy/mm/dd', font=("Helvetica", 14))
+        self.limitepago.pack(padx=10, pady=10)
+        
+        try:
+            self.limitepago.set_date(info['limitepago'])
+        except:
+            print("No limitepago")
+        
+        self.pack(padx=20, pady=20, anchor='center')
         
         ctk.CTkLabel(self, text="Total a pagar", font=("Helvetica", 32)).pack()
         self.totalapagar = ctk.CTkTextbox(self,
@@ -42,23 +54,6 @@ class Form(ctk.CTkFrame):
             self.totalapagar.insert(1.0, info['totalapagar'])
         except:
             print("No totalapagar")
-        
-        ctk.CTkLabel(self, text="Límite de pago", font=("Helvetica", 32)).pack()
-        self.limitepago = ctk.CTkTextbox(self,
-                                     fg_color=colors.grey,
-                                     border_width=1,
-                                     corner_radius=7,
-                                     width=350,
-                                     height=50
-                                     )
-        self.limitepago.pack(pady=15)
-        
-        try:
-            self.limitepago.insert(1.0, info['limitepago'])
-        except Exception as e:
-            print("No limitepago: ", e)
-        
-        self.pack(padx=20, pady=20, anchor='nw')
         
     
     def getValues(self):
@@ -93,9 +88,9 @@ class NuevoCredito(ctk.CTkFrame):
         
         # Recuperando el ID de la cita si es que se desea editar un registro
         try:
-            self.idcita = dict(*args)['idcredito']
+            self.idcredito = dict(*args)['idcredito']
         except:
-            self.idcita = None
+            self.idcredito = None
         
         # Para cambiar de pantalla
         self.change_page = change_page
@@ -129,27 +124,25 @@ class NuevoCredito(ctk.CTkFrame):
         if self.idcita != None:
             return self.editInfo(fields)
         
-        self.conn.postAppointments((
+        self.conn.postCredit((
             fields['idcliente'].get(),
-            fields['fecha'].get_date(),
-            fields['cotizacion'].get(),
-            fields['descripcion'].get("1.0", "end-1c"),
-            fields['lugar'].get("1.0", "end-1c")            
+            datetime.now().date(), # Fecha de hoy
+            fields['limitepago'].get(),
+            fields['totalapagar'].get()           
         ))
         
         # Cambia a la screen de trabajos
         
-        self.change_page("Trabajos")
+        self.change_page("Creditos")
         
     def editInfo(self, fields):
-        self.conn.putAppointment(
-            self.idcita,
+        self.conn.postCredit(
+            self.idcredito,
             (
             fields['idcliente'].get(),
-            fields['fecha'].get(),
-            fields['cotizacion'].get(),
-            fields['descripcion'].get("1.0", "end-1c"),
-            fields['lugar'].get("1.0", "end-1c")            
+            datetime.now().date(), # Fecha de hoy
+            fields['limitepago'].get(),
+            fields['totalapagar'].get()           
         ))
         
         # Cambia a la screen de trabajos
