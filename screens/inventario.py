@@ -25,7 +25,7 @@ class Inventario(ctk.CTkFrame):
                       text="Agregar al inventario",
                       fg_color=colors.darkbrown,
                       hover_color=colors.brown,
-                      font=("Helvetica", 15)
+                      font=("Helvetica", 15), command=lambda: change_page ("AgregarInventario")
         ).pack(padx=20, pady=15, side="top", anchor='e')
         
         TablaInventario(self)
