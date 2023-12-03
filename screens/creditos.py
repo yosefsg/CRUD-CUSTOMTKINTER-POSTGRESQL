@@ -47,29 +47,7 @@ class Creditos(ctk.CTkFrame):
         self.conn = pg.Connection()
         self.cursor = self.conn.cursor
         
-<<<<<<< HEAD
-        ctk.CTkButton(self,
-                      width=140,
-                      height=32,
-                      text="Abonar",
-                      fg_color=colors.darkbrown,
-                      hover_color=colors.brown,
-                      font=("Helvetica", 15),
-                      command=lambda: self.change_page("AgendarCita")
-        ).pack(padx=20, pady=15, side="top", anchor='e')
-        
-         ctk.CTkButton(self,
-                      width=140,
-                      height=32,
-                      text="Añadir Crédito",
-                      fg_color=colors.darkbrown,
-                      hover_color=colors.brown,
-                      font=("Helvetica", 15),
-                      command=lambda: self.change_page("Abonos")
-        ).pack(padx=5, pady=1, side="top", anchor='e')
-=======
         OptionsFrame(self, change_page)
->>>>>>> a48f19567f30d855775d2378d44205acaa6a22f9
         
         TablaCredito(self)  
         
