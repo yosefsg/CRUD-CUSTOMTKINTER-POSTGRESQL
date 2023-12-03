@@ -76,7 +76,7 @@ class AbonosFrame(ctk.CTkFrame):
         
     def getValues(self):
         return {**self.left, **self.right}
-
+        
 class Abonos(ctk.CTkFrame):
     def __init__(self, parent, change_page, *args): 
 >>>>>>> b434637119dd49fe9b9ba8bae3634713888c1580
