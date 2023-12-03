@@ -67,18 +67,18 @@ VALUES
     (4, 4, 4, '2023-10-25', 200, 'JKL901234CDE', 'Instalación de nuevo condensador', 'Cheque'),
     (5, 5, 5, '2023-11-15', 270, 'MNO567890DEF', 'Reparación de motor y mantenimiento general', 'Transferencia bancaria');
 */
-INSERT INTO CREDITO (idcredito, idcliente, fecha, limitepago, totalapagar)
-VALUES
-    (1, 1, '2023-12-01', '2024-01-01', 2000),
-    (2, 2, '2023-11-20', '2023-12-20', 1800),
-    (3, 3, '2023-12-05', '2024-01-05', 5400),
-    (4, 4, '2023-11-25', '2023-12-25', 1080),
-    (5, 5, '2023-12-10', '2024-01-10', 975);
+-- INSERT INTO CREDITO (idcredito, idcliente, fecha, limitepago, totalapagar)
+-- VALUES
+--     (1, 1, '2023-12-01', '2024-01-01', 2000),
+--     (2, 2, '2023-11-20', '2023-12-20', 1800),
+--     (3, 3, '2023-12-05', '2024-01-05', 5400),
+--     (4, 4, '2023-11-25', '2023-12-25', 1080),
+--     (5, 5, '2023-12-10', '2024-01-10', 975);
 	
-INSERT INTO ABONOS (idabonos, idcredito, monto)
-VALUES
-    (1, 1, 100),
-    (2, 2, 80),
-    (3, 3, 120),
-    (4, 4, 90),
-    (5, 5, 150);
+-- INSERT INTO ABONOS (idabonos, idcredito, monto)
+-- VALUES
+--     (1, 1, 100),
+--     (2, 2, 80),
+--     (3, 3, 120),
+--     (4, 4, 90),
+--     (5, 5, 150);
