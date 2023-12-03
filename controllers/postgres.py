@@ -144,29 +144,28 @@ class Connection:
         
         # Insertando a la tabla de Credito    
         sql = """
-        INSERT INTO CREDITO (idcliente, fecha, limitepago)
-        VALUES (%s, %s, %s);
+        INSERT INTO CREDITO (idcliente, fecha, limitepago, totalapagar)
+        VALUES (%s, %s, %s, %s);
         """
+        
         try:
             self.cursor.execute(sql, data)
             self.conn.commit()
         except Exception as e:
             print("SQL ERROR: ", e)
             self.conn.rollback()
-            
-        # Insertando a la tabla de Abonos para asignar el total a pagar    
+        
+    def deleteCredit(self, data):
         sql = """
-        INSERT INTO ABONOS (idcliente, fecha, limitepago)
-        VALUES (%s, %s, %s);
-        """
+        DELETE FROM CREDITO WHERE idcredito = {};
+        """.format(data)
         
         try:
-            self.cursor.execute(sql, data)
+            self.cursor.execute(sql)
             self.conn.commit()
         except Exception as e:
             print("SQL ERROR: ", e)
             self.conn.rollback()
-        
     
         # Para las citas
     def getAppointments(self):

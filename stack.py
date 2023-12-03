@@ -6,6 +6,7 @@ from screens.inventario import Inventario
 from screens.creditos import Creditos
 from screens.abonos import Abonos
 from screens.agendarcita import AgendarCita
+from screens.nuevocredito import NuevoCredito
 import customtkinter as ctk
 
 class PageStack(ctk.CTkFrame):
@@ -31,7 +32,8 @@ class PageStack(ctk.CTkFrame):
                 "Creditos": Creditos,
                 "AgendarCita": AgendarCita,
                 "RegistroCliente": RegistroCliente,
-                "Abonos": Abonos
+                "Abonos": Abonos,
+                "NuevoCredito": NuevoCredito
                 }
         
         
