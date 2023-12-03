@@ -272,4 +272,30 @@ class Connection:
         except Exception as e:
             print("SQL ERROR: ", e)
             self.conn.rollback()
+            
+    def deleteInventory(self, data):
+        sql = """
+        DELETE FROM INVENTARIO WHERE idinventario = {};
+        """.format(data)
+        
+        try:
+            self.cursor.execute(sql)
+            self.conn.commit()
+        except Exception as e:
+            print("SQL ERROR: ", e)
+            self.conn.rollback()
+                
+        self.close()
+        
+    def getInventory(self, data):
+        sql = """
+        SELECT * FROM INVENTARIO WHERE idcita = {};
+        """.format(data)
+        self.cursor.execute(sql)
+        row = self.cursor.fetchone()
+        
+        if row:
+            return dict(row)
+        else:
+            return None
     # Si ven necesario agregar más controladores, adelante
