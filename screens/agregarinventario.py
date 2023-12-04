@@ -71,6 +71,12 @@ class AgregarInventario(ctk.CTkFrame):
     def __init__(self, parent, change_page, *args): 
         super().__init__(parent)
         
+        # Recuperando el ID de la cita si es que se desea editar un registro
+        try:
+            self.idinventario = dict(*args)['idinventario']
+        except:
+            self.idinventario = None
+            
         # Para cambiar de pantalla
         self.change_page = change_page
 
@@ -99,6 +105,10 @@ class AgregarInventario(ctk.CTkFrame):
 
     def sendInfo(self, fields):
         
+            # Si es el caso de editar una cita
+        if self.idinventario != None:
+            return self.editInfo(fields)
+        
         self.conn.postInventory((
             fields['descripcion'].get(),
             fields['cantidad'].get(),            
@@ -108,3 +118,15 @@ class AgregarInventario(ctk.CTkFrame):
         
         self.change_page("Inventario")
         
+    def editInfo(self, fields):
+        self.conn.putInventory(
+            self.idinventario,
+            (
+            fields['idinventario'].get(),
+            fields['descripcion'].get(),
+            fields['cantidad'].get(),
+        ))
+        
+          # Cambia a la screen de inventario
+        
+        self.change_page("Inventario")

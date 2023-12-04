@@ -5,15 +5,17 @@ import functools
 
 
 class TablaInventario(ctk.CTkFrame):
-    def __init__(self, parent):
+    def __init__(self, parent, change_page):
         super().__init__(parent)
+        self.parent = parent
+        self.change_page = change_page
         self.configure(corner_radius=0, fg_color=colors.grey)
         
         _edit_icon = icon_to_image('edit', fill=colors.grey, scale_to_width=16)
         _trash_icon = icon_to_image('trash-alt', fill=colors.grey, scale_to_width=16)
         
         # Estas son las cabeceras que indican qué va en cada columna
-        headers = ["ID", "Descripcion", "Cantidad"]
+        headers = ["ID", "Descripcion", "Cantidad", "Editar", "Eliminar"]
         
         # Esta cosa hace que se muestren los headers en la app, creando objetos de Etiqueta por cada header 
         for col, header in enumerate(headers):
@@ -49,7 +51,7 @@ class TablaInventario(ctk.CTkFrame):
                         width=10,
                         height=10,
                         corner_radius=20,
-                        command=functools.partial(self.editAppointment, data[i-1][0])).grid(row=i, column=j, sticky='e')
+                        command=functools.partial(self.editInventory, data[i-1][0])).grid(row=i, column=j, sticky='e')
             
             # Botón de eliminar
             ctk.CTkButton(self,
@@ -60,7 +62,7 @@ class TablaInventario(ctk.CTkFrame):
                         width=10,
                         height=10,
                         corner_radius=20,
-                        command=functools.partial(self.deleteAppointment, data[i-1][0])).grid(row=i, column=j+1, sticky='e')
+                        command=functools.partial(self.deleteInventory, data[i-1][0])).grid(row=i, column=j+1, sticky='e')
             
                 
         # Esto, también importante, es para modificar el tamaño horizontal de cada columna
@@ -85,6 +87,5 @@ class TablaInventario(ctk.CTkFrame):
         self.change_page("Inventario")
         
     def editInventory(self, idinventario):
-        inventario = self.parent.conn.getInventory(idinventario)
-        
+        inventario = self.parent.conn.getInventoryO(idinventario)
         self.change_page("AgregarInventario", inventario)

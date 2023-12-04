@@ -287,9 +287,9 @@ class Connection:
                 
         self.close()
         
-    def getInventory(self, data):
+    def getInventoryO(self, data):
         sql = """
-        SELECT * FROM INVENTARIO WHERE idcita = {};
+        SELECT * FROM INVENTARIO WHERE idinventario = {};
         """.format(data)
         self.cursor.execute(sql)
         row = self.cursor.fetchone()
@@ -298,4 +298,20 @@ class Connection:
             return dict(row)
         else:
             return None
+            
+            
+    def putInventory(self, idinventario, data):
+        sql = """
+        UPDATE INVENTARIO
+        SET
+            idinventario = %s, descripcion = %s, cantidad = %s
+        WHERE idinventario = {};
+        """.format(idinventario)
+        
+        try:
+            self.cursor.execute(sql, data)
+            self.conn.commit()
+        except Exception as e:
+            print("SQL ERROR: ", e)
+            self.conn.rollback()
     # Si ven necesario agregar más controladores, adelante

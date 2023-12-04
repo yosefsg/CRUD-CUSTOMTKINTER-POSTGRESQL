@@ -28,7 +28,7 @@ class Inventario(ctk.CTkFrame):
                       font=("Helvetica", 15), command=lambda: change_page ("AgregarInventario")
         ).pack(padx=20, pady=15, side="top", anchor='e')
         
-        TablaInventario(self)
+        TablaInventario(self, self.change_page)
         
         # ctk.CTkLabel(self, text="INVENTARIO").pack()
         
