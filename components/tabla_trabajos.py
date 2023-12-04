@@ -34,7 +34,7 @@ class TablaTrabajos(ctk.CTkFrame):
                 cita['idcita'],
                 cita['idcliente'],
                 cita['fecha'],
-                cita['cotizacion'],
+                '$' + str(cita['cotizacion']),
                 cita['lugar'],
                 cita['descripcion']
                 )
