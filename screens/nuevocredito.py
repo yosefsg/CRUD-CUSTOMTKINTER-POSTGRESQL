@@ -11,9 +11,9 @@ class Form(ctk.CTkFrame):
     def __init__(self, parent, args):
         super().__init__(parent)
         self.configure(fg_color=colors.white)
-        
+
         info = dict(*args)
-        
+
         ctk.CTkLabel(self, text="ID Cliente", font=("Helvetica", 32)).pack()
         self.idcliente = ctk.CTkEntry(self,
                                      fg_color=colors.grey,
@@ -22,7 +22,7 @@ class Form(ctk.CTkFrame):
                                      width=350,
                                      height=40
                                      )
-        self.idcliente.pack(pady=15)
+        self.idcliente.pack(pady=(5, 30))
         
         try:
             self.idcliente.insert(1.0, info['idcliente'])
@@ -31,7 +31,7 @@ class Form(ctk.CTkFrame):
             
         ctk.CTkLabel(self, text="Límite de pago", font=("Helvetica", 32)).pack()
         self.limitepago = DateEntry(self, width=30, background=colors.darkbrown, date_pattern='yyyy/mm/dd', font=("Helvetica", 14))
-        self.limitepago.pack(padx=10, pady=10)
+        self.limitepago.pack(pady=(5, 30))
         
         try:
             self.limitepago.set_date(info['limitepago'])
@@ -48,7 +48,7 @@ class Form(ctk.CTkFrame):
                                      width=350,
                                      height=40
                                      )
-        self.totalapagar.pack(pady=15)
+        self.totalapagar.pack(pady=(5, 30))
         
         try:
             self.totalapagar.insert(1.0, info['totalapagar'])
@@ -69,23 +69,23 @@ class NuevoCreditoFrame(ctk.CTkFrame):
     def __init__(self, parent, args):
         super().__init__(parent)
         self.configure(corner_radius=15, fg_color=colors.white)
-        
+
         # Para consumir las "apis" y armar la conexión
         self.conn = pg.Connection()
         self.cursor = self.conn.cursor
-        
+
         # Frame para la parte de la izquierda XD
         self.form = Form(self, args).getValues()
-        
+
         self.pack(fill='both', expand=True, padx=20, pady=20)
-        
+
     def getValues(self):
         return {**self.form}
 
 class NuevoCredito(ctk.CTkFrame):
     def __init__(self, parent, change_page, *args): 
         super().__init__(parent)
-        
+
         # Recuperando el ID de la cita si es que se desea editar un registro
         try:
             self.idcredito = dict(*args)['idcredito']
@@ -97,13 +97,13 @@ class NuevoCredito(ctk.CTkFrame):
 
         self.configure(corner_radius=0, fg_color=colors.grey)
         Header(self, "Nuevo Crédito")
-        
+
         # Para consumir las "apis" y armar la conexión
         self.conn = pg.Connection()
         self.cursor = self.conn.cursor
-        
+
         fields = NuevoCreditoFrame(self, args).getValues()
-        
+
         # Boton para registrar cita
         ctk.CTkButton(self,
                       width=250,
@@ -115,11 +115,11 @@ class NuevoCredito(ctk.CTkFrame):
                       font=("Helvetica", 20, 'bold'),
                       command=lambda: self.sendInfo(fields)
         ).pack(pady=15, padx=20, side="bottom", anchor='center')
-        
+
         self.pack(fill='both', expand=True)
 
     def sendInfo(self, fields):
-        
+
         # Si es el caso de editar una cita
         if self.idcredito != None:
             return self.editInfo(fields)
@@ -130,7 +130,7 @@ class NuevoCredito(ctk.CTkFrame):
             fields['limitepago'].get(),
             fields['totalapagar'].get()           
         ))
-        
+
         # Cambia a la screen de trabajos
         
         self.change_page("Creditos")
@@ -144,7 +144,7 @@ class NuevoCredito(ctk.CTkFrame):
             fields['limitepago'].get(),
             fields['totalapagar'].get()           
         ))
-        
+
         # Cambia a la screen de trabajos
-        
+
         self.change_page("Trabajos")

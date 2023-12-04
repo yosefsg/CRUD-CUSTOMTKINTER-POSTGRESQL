@@ -1,10 +1,15 @@
 import customtkinter as ctk
 import colors
+from tkfontawesome import icon_to_image
+import functools
 
 class TablaCredito(ctk.CTkFrame):
-    def __init__(self, parent):
+    def __init__(self, parent, change_page):
         super().__init__(parent)
+        self.parent = parent
+        self.change_page = change_page
         self.configure(corner_radius=0, fg_color=colors.grey)
+        _abonar_icon = icon_to_image('money-bill', fill=colors.grey, scale_to_width=16)
         
         # Encabezados de la tabla
         headers = ["ID Crédito", "ID Cliente", "Fecha", "Límite de Pago", "Total", "Restante"]
@@ -33,6 +38,16 @@ class TablaCredito(ctk.CTkFrame):
             for j, valor in enumerate(fila):
                 etiqueta = ctk.CTkLabel(self, text=str(valor), font=("Helvetica", 16))
                 etiqueta.grid(row=i, column=j, sticky='w')
+                
+            ctk.CTkButton(self,
+                image=_abonar_icon,
+                text="",
+                fg_color=colors.darkbrown,
+                hover_color=colors.brown,
+                width=10,
+                height=10,
+                corner_radius=20,
+                command=functools.partial(self.editAppointment, data[i-1][0])).grid(row=i, column=j, sticky='e')
 
         # Ajustar el tamaño de las columnas
         self.grid_columnconfigure(0, weight=1)  # ID Crédito
@@ -43,3 +58,8 @@ class TablaCredito(ctk.CTkFrame):
         self.grid_columnconfigure(5, weight=1)  # Límite de Pago
 
         self.pack(expand=True, fill='both', anchor='ne')
+        
+    def editAppointment(self, idcredito):
+        credito = self.parent.conn.getCredit(idcredito)
+        
+        self.change_page("Abonos", credito)

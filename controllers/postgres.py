@@ -120,7 +120,9 @@ class Connection:
         SELECT C.idcredito, C.idcliente, C.fecha, C.limitepago, C.totalapagar, C.totalapagar-A.monto AS restante
         FROM CREDITO AS C
         LEFT JOIN ABONOS AS A
-            ON C.idcredito = A.idcredito;
+            ON C.idcredito = A.idcredito
+            
+        GROUP BY C.idcredito, A.monto;
         """
         
         self.cursor.execute(sql)
@@ -129,9 +131,15 @@ class Connection:
         return ([dict(row) for row in rows])
     
     def getCredit(self, data):
+       
         sql = """
-        SELECT * FROM CREDITO WHERE idcredito = {};
+        SELECT C.idcredito, C.totalapagar, C.totalapagar-A.monto AS restante
+        FROM CREDITO AS C
+        LEFT JOIN ABONOS AS A
+            ON C.idcredito = A.idcredito
+        WHERE C.idcredito = {};
         """.format(data)
+        
         self.cursor.execute(sql)
         row = self.cursor.fetchone()
         
@@ -234,19 +242,6 @@ class Connection:
             
             
     # Abonos
-    def postAbono(self, data):       
-        sql = """
-        INSERT INTO ABONOS (idcredito, monto)
-        VALUES (%s, %s);
-        """
-        
-        try:
-            self.cursor.execute(sql, data)
-            self.conn.commit()
-        except Exception as e:
-            print("SQL ERROR: ", e)
-            self.conn.rollback()
-            
     def getAbono(self, data):
         sql = """
         SELECT * FROM ABONOS WHERE idcredito = {};
@@ -258,6 +253,34 @@ class Connection:
             return dict(row)
         else:
             return None
+        
+    def postAbonos(self, data):       
+        sql = """
+        INSERT INTO ABONOS (idcredito, monto)
+        VALUES (%s, %s);
+        """
+        
+        try:
+            self.cursor.execute(sql, data)
+            self.conn.commit()
+        except Exception as e:
+            print("SQL ERROR: ", e)
+            self.conn.rollback()   
+        
+    def putAbonos(self, idabonos, idcredito, monto):
+        sql = """
+        UPDATE ABONOS
+        SET
+            monto = monto + {}
+        WHERE idabonos = {};
+        """.format(monto, idabonos)
+        
+        try:
+            self.cursor.execute(sql)
+            self.conn.commit()
+        except Exception as e:
+            print("SQL ERROR: ", e)
+            self.conn.rollback()
         
         
     def postInventory(self, data):       
