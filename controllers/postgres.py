@@ -281,7 +281,7 @@ class Connection:
         except Exception as e:
             print("SQL ERROR: ", e)
             self.conn.rollback()
-        
+            
         
     def postInventory(self, data):       
         sql = """

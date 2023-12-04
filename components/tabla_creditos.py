@@ -39,6 +39,10 @@ class TablaCredito(ctk.CTkFrame):
                 etiqueta = ctk.CTkLabel(self, text=str(valor), font=("Helvetica", 16))
                 etiqueta.grid(row=i, column=j, sticky='w')
                 
+            if int(data[i-1][5].split("$")[1]) <= 0:
+                parent.conn.deleteCredit(data[i-1][0])
+                self.change_page("Creditos")
+                
             ctk.CTkButton(self,
                 image=_abonar_icon,
                 text="",
