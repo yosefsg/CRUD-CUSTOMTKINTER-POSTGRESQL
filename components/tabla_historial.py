@@ -26,7 +26,7 @@ class TablaHistorial(ctk.CTkFrame):
                 historial['idhistorial'],
                 historial['idcliente'],
                 historial['fecha'],
-                historial['costo'],
+                '$' + str(historial['costo']),
                 historial['descripcion']
                 )
                 for historial in fetch_historial]
