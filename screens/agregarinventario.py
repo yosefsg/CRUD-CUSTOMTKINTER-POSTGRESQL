@@ -44,8 +44,7 @@ class Form(ctk.CTkFrame):
     
     def getValues(self):
         # Devuelve los campos de texto
-        return 
-        {
+        return {
             "descripcion": self.descripcion,
             "cantidad": self.cantidad
         }
