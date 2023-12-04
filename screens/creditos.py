@@ -20,16 +20,6 @@ class OptionsFrame(ctk.CTkFrame):
                       command=lambda: change_page("NuevoCredito")
         ).pack(padx=20, pady=15, side="right", anchor='ne')
         
-        ctk.CTkButton(self,
-                      width=140,
-                      height=32,
-                      text="Abonar",
-                      fg_color=colors.darkbrown,
-                      hover_color=colors.brown,
-                      font=("Helvetica", 15),
-                      command=lambda: change_page("Abonos")
-        ).pack(padx=20, pady=15, side="right", anchor='ne')
-        
         self.pack(fill='x')
         
 
@@ -49,6 +39,6 @@ class Creditos(ctk.CTkFrame):
         
         OptionsFrame(self, change_page)
         
-        TablaCredito(self)  
+        TablaCredito(self, change_page)  
         
         self.pack(fill='both', expand=True)

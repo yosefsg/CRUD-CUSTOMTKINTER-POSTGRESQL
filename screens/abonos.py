@@ -27,6 +27,8 @@ class LeftForm(ctk.CTkFrame):
             self.monto.insert(0, info['monto'])
         except:
             print("No monto")
+            
+        self.pack(side='left', padx=90, pady=20, anchor='nw')
     
     def getValues(self):
         # Devuelve los campos de texto
@@ -41,34 +43,16 @@ class RightForm(ctk.CTkFrame):
         self.configure(fg_color=colors.white)
         
         info = dict(*args)
-        
         ctk.CTkLabel(self, text="Total a pagar", font=("Helvetica", 25)).pack(anchor='w')
-        self.totalapagar = ctk.CTkEntry(self, fg_color=colors.grey, border_width=1, corner_radius=7, width=250, height=40)
+        self.totalapagar = ctk.CTkLabel(self, text=info['totalapagar'], fg_color=colors.grey, corner_radius=7, width=250, height=40)
         self.totalapagar.pack(pady=15, anchor='w')
-        
-        try:
-            self.totalapagar.insert(0, info['totalapagar'])
-        except:
-            print("No totalapagar")
-        
-        
+
+        _restante = info['restante'] if info['restante'] != None else info['totalapagar']
         ctk.CTkLabel(self, text="Restante", font=("Helvetica", 25)).pack(anchor='w')
-        self.restante = ctk.CTkEntry(self, fg_color=colors.grey, border_width=1, corner_radius=7, width=250, height=40)
+        self.restante = ctk.CTkLabel(self, text=_restante, fg_color=colors.grey, corner_radius=7, width=250, height=40)
         self.restante.pack(pady=15, anchor='w')
         
-        try:
-            self.restante.insert(0, info['restante'])
-        except Exception as e:
-            print("No restante: ", e)
-        
-
-    def getValues(self):
-        # Devuelve los campos de texto
-        return {
-            "restante": self.restante,
-            "totalapagar": self.totalapagar
-        }
-
+        self.pack(side='right', padx=90, pady=20, anchor='nw')
 
 class AbonosFrame(ctk.CTkFrame):
     def __init__(self, parent, args):
@@ -83,23 +67,17 @@ class AbonosFrame(ctk.CTkFrame):
         self.left = LeftForm(self, args).getValues()
         
         # Frame para la parte de la derecha XD
-        self.right = RightForm(self, args).getValues()
+        RightForm(self, args)
 
         self.pack(fill='both', expand=True, padx=20, pady=20)
 
     def getValues(self):
-        return {**self.left, **self.right}
+        return {**self.left}
 
 
 class Abonos(ctk.CTkFrame):
     def __init__(self, parent, change_page, *args):
         super().__init__(parent)
-
-        # Recuperando el ID del crédito si es que se desea editar un registro
-        try:
-            self.idabonos = dict(*args)['idcredito']
-        except:
-            self.idabonos = None
 
         # Para cambiar de pantalla
         self.change_page = change_page
@@ -110,6 +88,12 @@ class Abonos(ctk.CTkFrame):
         # Para consumir las "apis" y armar la conexión
         self.conn = pg.Connection()
         self.cursor = self.conn.cursor
+        
+        # Recuperando el ID del crédito si es que se desea editar un registro
+        try:
+            self.idabonos = self.conn.getAbono(dict(*args)['idcredito'])
+        except:
+            self.idabonos = None
 
         fields = AbonosFrame(self, args).getValues()
 
@@ -129,28 +113,23 @@ class Abonos(ctk.CTkFrame):
 
     def sendInfo(self, fields):
         # Si es el caso de editar un abono
+        
+        print(self.idabonos)
         if self.idabonos is not None:
+            print("ENTRAA SADASD")
             return self.editInfo(fields)
 
         self.conn.postAbonos((
-            fields['idcredito'].get(),
-            fields['monto'].get(),
-            fields['restante'].get(),
-            fields['totalapagar'].get()  
+            str(fields['idcredito'].get()),
+            str(fields['monto'].get()) 
         ))
 
         # Cambia a la pantalla de trabajos
-        self.change_page("Trabajos")
+        self.change_page("Creditos")
 
     def editInfo(self, fields):
         self.conn.putAbonos(
-            self.idabonos,
-            (
-                fields['idcredito'].get(),
-                fields['monto'].get(),
-                fields['restante'].get(),
-                fields['totalapagar'].get()  
-            ))
+            self.idabonos["idabonos"], str(fields['idcredito'].get()), str(fields['monto'].get()))
 
         # Cambia a la pantalla de trabajos
-        self.change_page("Trabajos")
+        self.change_page("Creditos")
