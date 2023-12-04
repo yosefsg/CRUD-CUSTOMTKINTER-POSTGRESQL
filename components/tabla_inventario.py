@@ -88,4 +88,5 @@ class TablaInventario(ctk.CTkFrame):
         
     def editInventory(self, idinventario):
         inventario = self.parent.conn.getInventoryO(idinventario)
+        
         self.change_page("AgregarInventario", inventario)

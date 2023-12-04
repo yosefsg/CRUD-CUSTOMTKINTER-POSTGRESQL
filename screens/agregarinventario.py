@@ -21,7 +21,7 @@ class Form(ctk.CTkFrame):
         self.descripcion.pack(pady=15)
         
         try:
-            self.descripcion.insert(1.0, info['descripcion'])
+            self.descripcion.insert(0, info['descripcion'])
         except:
             print("No descripcion")
         
@@ -36,7 +36,7 @@ class Form(ctk.CTkFrame):
         self.cantidad.pack(pady=15)
         
         try:
-            self.cantidad.insert(1.0, info['cantidad'])
+            self.cantidad.insert(0, info['cantidad'])
         except Exception as e:
             print("No cantidad: ", e)
         
@@ -44,8 +44,7 @@ class Form(ctk.CTkFrame):
     
     def getValues(self):
         # Devuelve los campos de texto
-        return 
-        {
+        return {
             "descripcion": self.descripcion,
             "cantidad": self.cantidad
         }
@@ -122,7 +121,6 @@ class AgregarInventario(ctk.CTkFrame):
         self.conn.putInventory(
             self.idinventario,
             (
-            fields['idinventario'].get(),
             fields['descripcion'].get(),
             fields['cantidad'].get(),
         ))

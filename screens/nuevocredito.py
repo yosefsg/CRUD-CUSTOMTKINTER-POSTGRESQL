@@ -22,8 +22,8 @@ class Form(ctk.CTkFrame):
                                      width=350,
                                      height=40
                                      )
-        self.idcliente.pack(pady=15)
-
+        self.idcliente.pack(pady=(5, 30))
+        
         try:
             self.idcliente.insert(1.0, info['idcliente'])
         except:
@@ -31,7 +31,7 @@ class Form(ctk.CTkFrame):
             
         ctk.CTkLabel(self, text="Límite de pago", font=("Helvetica", 32)).pack()
         self.limitepago = DateEntry(self, width=30, background=colors.darkbrown, date_pattern='yyyy/mm/dd', font=("Helvetica", 14))
-        self.limitepago.pack(padx=10, pady=10)
+        self.limitepago.pack(pady=(5, 30))
         
         try:
             self.limitepago.set_date(info['limitepago'])
@@ -48,8 +48,8 @@ class Form(ctk.CTkFrame):
                                      width=350,
                                      height=40
                                      )
-        self.totalapagar.pack(pady=15)
-
+        self.totalapagar.pack(pady=(5, 30))
+        
         try:
             self.totalapagar.insert(1.0, info['totalapagar'])
         except:
